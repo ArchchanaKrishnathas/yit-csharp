@@ -1,6 +1,6 @@
 ﻿namespace WinFormsApp1.Grade
 {
-    partial class frmShowGrade
+    partial class frmCreateGrade
     {
         /// <summary>
         /// Required designer variable.
@@ -39,6 +39,7 @@
             txtGrGroup = new TextBox();
             txtGrOrder = new TextBox();
             txtGrColour = new TextBox();
+            btnInsert = new Button();
             SuspendLayout();
             // 
             // lblGradeHeading
@@ -51,7 +52,7 @@
             lblGradeHeading.Name = "lblGradeHeading";
             lblGradeHeading.Size = new Size(360, 44);
             lblGradeHeading.TabIndex = 8;
-            lblGradeHeading.Text = "Show Grade";
+            lblGradeHeading.Text = "Create Grade";
             lblGradeHeading.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // label1
@@ -139,11 +140,25 @@
             txtGrColour.Size = new Size(203, 27);
             txtGrColour.TabIndex = 18;
             // 
-            // frmShowGrade
+            // btnInsert
+            // 
+            btnInsert.BackColor = Color.SeaGreen;
+            btnInsert.Font = new Font("Segoe UI", 10.8F);
+            btnInsert.ForeColor = Color.White;
+            btnInsert.Location = new Point(239, 276);
+            btnInsert.Name = "btnInsert";
+            btnInsert.Size = new Size(100, 44);
+            btnInsert.TabIndex = 20;
+            btnInsert.Text = "Insert";
+            btnInsert.UseVisualStyleBackColor = false;
+            btnInsert.Click += btnInsert_Click;
+            // 
+            // frmCreateGrade
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(360, 293);
+            ClientSize = new Size(360, 332);
+            Controls.Add(btnInsert);
             Controls.Add(txtGrColour);
             Controls.Add(txtGrOrder);
             Controls.Add(txtGrGroup);
@@ -155,10 +170,10 @@
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(lblGradeHeading);
-            Name = "frmShowGrade";
+            Name = "frmCreateGrade";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "frmShowGrade";
-            Load += frmShowGrade_Load;
+            Text = "frmCreateGrade";
+            Load += frmCreateGrade_Load;
             ResumeLayout(false);
             PerformLayout();
         }
@@ -176,5 +191,6 @@
         private TextBox txtGrGroup;
         private TextBox txtGrOrder;
         private TextBox txtGrColour;
+        private Button btnInsert;
     }
 }

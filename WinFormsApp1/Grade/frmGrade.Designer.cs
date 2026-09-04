@@ -56,6 +56,7 @@
             btnCreate.TabIndex = 1;
             btnCreate.Text = "Create";
             btnCreate.UseVisualStyleBackColor = true;
+            btnCreate.Click += btnCreate_Click;
             // 
             // btnEdit
             // 
@@ -77,6 +78,7 @@
             btnDelete.TabIndex = 3;
             btnDelete.Text = "Delete";
             btnDelete.UseVisualStyleBackColor = true;
+            btnDelete.Click += btnDelete_Click;
             // 
             // btnAllGrades
             // 

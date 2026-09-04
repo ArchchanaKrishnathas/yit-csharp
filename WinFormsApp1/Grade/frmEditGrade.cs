@@ -55,7 +55,27 @@ namespace WinFormsApp1.Grade
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
+            string connString = "Server=localhost;Database=school;Uid=root;Pwd=;port=3307";
+            MySqlConnection conn = new MySqlConnection(connString);
 
+            try
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand($"UPDATE grades SET grade_name ='{txtGrName.Text}', grade_group ='{txtGrGroup.Text}' , grade_order ='{txtGrOrder.Text}' , colour ='{txtGrColour.Text}' WHERE id ={this.gradeId}", conn);
+                
+                string affectedRow = cmd.ExecuteNonQuery().ToString();
+
+                MessageBox.Show("Updated successfully. Rows Affected: " + affectedRow, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred while connecting the databse: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                conn.Close();
+            }
         }
     }
 }

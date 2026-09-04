@@ -88,5 +88,61 @@ namespace WinFormsApp1.Grade
                 throw;
             }
         }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            string connString = "Server=localhost;Database=school;Uid=root;Pwd=;port=3307";
+            MySqlConnection conn = new MySqlConnection(connString);
+
+            try
+            {
+                conn.Open();
+
+                if (dgvGrades.CurrentRow == null)
+                {
+                    MessageBox.Show("no Data found");
+                    return;
+                }
+
+                string id = dgvGrades.CurrentRow.Cells["id"].Value?.ToString();
+
+                DialogResult result = MessageBox.Show(
+                    "Are you sure you want to delete this Grade?",
+                    "Confirm Delete",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning);
+
+                if (result == DialogResult.Yes)
+                {
+                    MySqlCommand cmd = new MySqlCommand($"DELETE FROM grades WHERE id = {id}", conn);
+                    int affected = cmd.ExecuteNonQuery();
+                    MessageBox.Show("Deleted successfully. Rows Affected: " + affected.ToString(), "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred while connecting the databse: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        private void btnCreate_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                frmCreateGrade f = new frmCreateGrade();
+                f.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message.ToString());
+                throw;
+            }
+        }
     }
 }

@@ -109,6 +109,7 @@
             // 
             txtGrId.Location = new Point(136, 66);
             txtGrId.Name = "txtGrId";
+            txtGrId.ReadOnly = true;
             txtGrId.Size = new Size(203, 27);
             txtGrId.TabIndex = 14;
             // 
