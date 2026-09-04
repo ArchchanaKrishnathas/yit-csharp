@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using WinFormsApp1.Grade;
 
 namespace WinFormsApp1
 {
@@ -60,6 +61,12 @@ namespace WinFormsApp1
         {
             frmConnect fc = new frmConnect();
             fc.ShowDialog();
+        }
+
+        private void btnGrade_Click(object sender, EventArgs e)
+        {
+            frmGrade fg = new frmGrade();
+            fg.ShowDialog();
         }
     }
 }

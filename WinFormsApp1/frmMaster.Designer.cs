@@ -36,6 +36,7 @@
             btnCombo = new Button();
             btnTryCatch = new Button();
             btnConnect = new Button();
+            btnGrade = new Button();
             SuspendLayout();
             // 
             // btnForm1
@@ -132,9 +133,21 @@
             btnConnect.Name = "btnConnect";
             btnConnect.Size = new Size(188, 38);
             btnConnect.TabIndex = 7;
-            btnConnect.Text = "CRUD";
+            btnConnect.Text = "CRUD- Students";
             btnConnect.UseVisualStyleBackColor = false;
             btnConnect.Click += btnConnect_Click;
+            // 
+            // btnGrade
+            // 
+            btnGrade.BackColor = Color.DarkSeaGreen;
+            btnGrade.Font = new Font("Segoe UI", 10.8F);
+            btnGrade.Location = new Point(208, 252);
+            btnGrade.Name = "btnGrade";
+            btnGrade.Size = new Size(188, 38);
+            btnGrade.TabIndex = 8;
+            btnGrade.Text = "CRUD-Grades";
+            btnGrade.UseVisualStyleBackColor = false;
+            btnGrade.Click += btnGrade_Click;
             // 
             // frmMaster
             // 
@@ -142,6 +155,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ControlLight;
             ClientSize = new Size(452, 351);
+            Controls.Add(btnGrade);
             Controls.Add(btnConnect);
             Controls.Add(btnTryCatch);
             Controls.Add(btnCombo);
@@ -166,5 +180,6 @@
         private Button btnCombo;
         private Button btnTryCatch;
         private Button btnConnect;
+        private Button btnGrade;
     }
 }
