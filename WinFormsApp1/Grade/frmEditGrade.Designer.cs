@@ -38,8 +38,10 @@
             txtGrName = new TextBox();
             txtGrGroup = new TextBox();
             txtGrOrder = new TextBox();
-            txtGrColour = new TextBox();
             btnUpdate = new Button();
+            pnlColor = new Panel();
+            btnChooseColor = new Button();
+            colorDialog1 = new ColorDialog();
             SuspendLayout();
             // 
             // lblGradeHeading
@@ -134,13 +136,6 @@
             txtGrOrder.Size = new Size(203, 27);
             txtGrOrder.TabIndex = 17;
             // 
-            // txtGrColour
-            // 
-            txtGrColour.Location = new Point(135, 230);
-            txtGrColour.Name = "txtGrColour";
-            txtGrColour.Size = new Size(203, 27);
-            txtGrColour.TabIndex = 18;
-            // 
             // btnUpdate
             // 
             btnUpdate.BackColor = Color.FromArgb(0, 64, 64);
@@ -154,13 +149,33 @@
             btnUpdate.UseVisualStyleBackColor = false;
             btnUpdate.Click += btnUpdate_Click;
             // 
+            // pnlColor
+            // 
+            pnlColor.BackColor = Color.White;
+            pnlColor.BorderStyle = BorderStyle.FixedSingle;
+            pnlColor.Location = new Point(136, 234);
+            pnlColor.Name = "pnlColor";
+            pnlColor.Size = new Size(40, 27);
+            pnlColor.TabIndex = 20;
+            // 
+            // btnChooseColor
+            // 
+            btnChooseColor.Location = new Point(182, 234);
+            btnChooseColor.Name = "btnChooseColor";
+            btnChooseColor.Size = new Size(157, 27);
+            btnChooseColor.TabIndex = 21;
+            btnChooseColor.Text = "Choose Color";
+            btnChooseColor.UseVisualStyleBackColor = true;
+            btnChooseColor.Click += btnChooseColor_Click;
+            // 
             // frmEditGrade
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(361, 324);
+            Controls.Add(btnChooseColor);
+            Controls.Add(pnlColor);
             Controls.Add(btnUpdate);
-            Controls.Add(txtGrColour);
             Controls.Add(txtGrOrder);
             Controls.Add(txtGrGroup);
             Controls.Add(txtGrName);
@@ -191,7 +206,9 @@
         private TextBox txtGrName;
         private TextBox txtGrGroup;
         private TextBox txtGrOrder;
-        private TextBox txtGrColour;
         private Button btnUpdate;
+        private Panel pnlColor;
+        private Button btnChooseColor;
+        private ColorDialog colorDialog1;
     }
 }

@@ -45,12 +45,19 @@ namespace WinFormsApp1.Grade
                 txtGrName.Text = dr["grade_name"].ToString();
                 txtGrGroup.Text = dr["grade_group"].ToString();
                 txtGrOrder.Text = dr["grade_order"].ToString();
-                txtGrColour.Text = dr["colour"].ToString();
+                string colour = dr["colour"].ToString();
+
+                if (!string.IsNullOrEmpty(colour))
+                {
+                    pnlColor.BackColor = ColorTranslator.FromHtml(colour);
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("An error occurred: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+       
     }
 }

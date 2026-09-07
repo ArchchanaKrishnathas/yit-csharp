@@ -45,7 +45,14 @@ namespace WinFormsApp1.Grade
                 txtGrName.Text = dr["grade_name"].ToString();
                 txtGrGroup.Text = dr["grade_group"].ToString();
                 txtGrOrder.Text = dr["grade_order"].ToString();
-                txtGrColour.Text = dr["colour"].ToString();
+
+                string colour = dr["colour"].ToString();
+
+                if (!string.IsNullOrEmpty(colour))
+                {
+                    pnlColor.BackColor =
+                        ColorTranslator.FromHtml(colour);
+                }
             }
             catch (Exception ex)
             {
@@ -61,8 +68,11 @@ namespace WinFormsApp1.Grade
             try
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand($"UPDATE grades SET grade_name ='{txtGrName.Text}', grade_group ='{txtGrGroup.Text}' , grade_order ='{txtGrOrder.Text}' , colour ='{txtGrColour.Text}' WHERE id ={this.gradeId}", conn);
-                
+
+                string colour = ColorTranslator.ToHtml(pnlColor.BackColor);
+
+                MySqlCommand cmd = new MySqlCommand($"UPDATE grades SET grade_name ='{txtGrName.Text}', grade_group ='{txtGrGroup.Text}' , grade_order ='{txtGrOrder.Text}' , colour ='{colour}' WHERE id ={this.gradeId}", conn);
+
                 string affectedRow = cmd.ExecuteNonQuery().ToString();
 
                 MessageBox.Show("Updated successfully. Rows Affected: " + affectedRow, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -75,6 +85,14 @@ namespace WinFormsApp1.Grade
             finally
             {
                 conn.Close();
+            }
+        }
+
+        private void btnChooseColor_Click(object sender, EventArgs e)
+        {
+            if (colorDialog1.ShowDialog() == DialogResult.OK)
+            {
+                pnlColor.BackColor = colorDialog1.Color;
             }
         }
     }

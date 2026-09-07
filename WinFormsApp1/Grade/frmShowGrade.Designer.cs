@@ -38,7 +38,8 @@
             txtGrName = new TextBox();
             txtGrGroup = new TextBox();
             txtGrOrder = new TextBox();
-            txtGrColour = new TextBox();
+            btnChooseColor = new Button();
+            pnlColor = new Panel();
             SuspendLayout();
             // 
             // lblGradeHeading
@@ -132,19 +133,32 @@
             txtGrOrder.Size = new Size(203, 27);
             txtGrOrder.TabIndex = 17;
             // 
-            // txtGrColour
+            // btnChooseColor
             // 
-            txtGrColour.Location = new Point(135, 230);
-            txtGrColour.Name = "txtGrColour";
-            txtGrColour.Size = new Size(203, 27);
-            txtGrColour.TabIndex = 18;
+            btnChooseColor.Location = new Point(181, 232);
+            btnChooseColor.Name = "btnChooseColor";
+            btnChooseColor.Size = new Size(157, 27);
+            btnChooseColor.TabIndex = 23;
+            btnChooseColor.Text = "Choose Color";
+            btnChooseColor.UseVisualStyleBackColor = true;
+           
+            // 
+            // pnlColor
+            // 
+            pnlColor.BackColor = Color.White;
+            pnlColor.BorderStyle = BorderStyle.FixedSingle;
+            pnlColor.Location = new Point(135, 232);
+            pnlColor.Name = "pnlColor";
+            pnlColor.Size = new Size(40, 27);
+            pnlColor.TabIndex = 22;
             // 
             // frmShowGrade
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(360, 293);
-            Controls.Add(txtGrColour);
+            Controls.Add(btnChooseColor);
+            Controls.Add(pnlColor);
             Controls.Add(txtGrOrder);
             Controls.Add(txtGrGroup);
             Controls.Add(txtGrName);
@@ -175,6 +189,7 @@
         private TextBox txtGrName;
         private TextBox txtGrGroup;
         private TextBox txtGrOrder;
-        private TextBox txtGrColour;
+        private Button btnChooseColor;
+        private Panel pnlColor;
     }
 }
