@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
 using System.Text;
@@ -11,6 +12,7 @@ namespace WinFormsApp1
 {
     public partial class frmShowDbStudent : Form
     {
+        string connectionString = ConfigurationManager.ConnectionStrings["MyDbConnection"]?.ConnectionString ?? string.Empty;
         private string studentId;
         public frmShowDbStudent(string id)
         {
@@ -22,8 +24,8 @@ namespace WinFormsApp1
         {
             //txtFname.Text = studentId;
 
-            string connString = "Server=localhost;Database=school;Uid=root;Pwd=;port=3307";
-            MySqlConnection conn = new MySqlConnection(connString);
+            //string connString = "Server=localhost;Database=school;Uid=root;Pwd=;port=3307";
+            MySqlConnection conn = new MySqlConnection(connectionString);
 
             try
             {
@@ -31,7 +33,15 @@ namespace WinFormsApp1
 
 
                 //Students
-                MySqlCommand cmd = new MySqlCommand($"SELECT * FROM students WHERE id = {this.studentId}", conn);
+                //MySqlCommand cmd = new MySqlCommand($"SELECT * FROM students WHERE id = {this.studentId}", conn);
+
+                MySqlCommand cmd = new MySqlCommand(
+    "SELECT students.*, families.mobile_number AS guardian_number " +
+    "FROM students " +
+    "LEFT JOIN families ON students.family_id = families.id " +
+    "WHERE students.id = @id", conn);
+
+                cmd.Parameters.AddWithValue("@id", this.studentId);
 
                 MySqlDataAdapter da = new MySqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
@@ -143,7 +153,7 @@ namespace WinFormsApp1
                 //txtFam.Text = dr["family_id"].ToString();
 
                 // Load families
-                string familyQuery = "SELECT id, mobile_number FROM families";
+                /*string familyQuery = "SELECT id, mobile_number FROM families";
 
                 MySqlDataAdapter familyAdapter = new MySqlDataAdapter(familyQuery, conn);
                 DataTable familyTable = new DataTable();
@@ -167,7 +177,17 @@ namespace WinFormsApp1
                 {
                     txtFam.Text = "N/A";
                 }
-
+*/
+                // Guardian Mobile Number
+                if (dr["guardian_number"] != DBNull.Value &&
+                    !string.IsNullOrWhiteSpace(dr["guardian_number"].ToString()))
+                {
+                    txtFam.Text = dr["guardian_number"].ToString();
+                }
+                else
+                {
+                    txtFam.Text = "N/A";
+                }
             }
             catch (Exception ex)
             {

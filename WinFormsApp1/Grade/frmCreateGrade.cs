@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
 using System.Text;
@@ -11,7 +12,7 @@ namespace WinFormsApp1.Grade
 {
     public partial class frmCreateGrade : Form
     {
-
+        string connectionString = ConfigurationManager.ConnectionStrings["MyDbConnection"]?.ConnectionString ?? string.Empty;
         public frmCreateGrade()
         {
             InitializeComponent();
@@ -26,8 +27,8 @@ namespace WinFormsApp1.Grade
 
         private void btnInsert_Click(object sender, EventArgs e)
         {
-            string connString = "Server=localhost;Database=school;Uid=root;Pwd=;port=3307";
-            MySqlConnection conn = new MySqlConnection(connString);
+            //string connString = "Server=localhost;Database=school;Uid=root;Pwd=;port=3307";
+            MySqlConnection conn = new MySqlConnection(connectionString);
 
             try
             {

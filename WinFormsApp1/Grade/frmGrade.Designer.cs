@@ -130,6 +130,7 @@
             Name = "frmGrade";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "frmGrade";
+            Load += frmGrade_Load;
             ((System.ComponentModel.ISupportInitialize)dgvGrades).EndInit();
             ResumeLayout(false);
         }

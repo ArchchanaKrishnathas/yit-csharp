@@ -114,6 +114,7 @@
             txtGrId.ReadOnly = true;
             txtGrId.Size = new Size(203, 27);
             txtGrId.TabIndex = 14;
+            txtGrId.TextChanged += txtGrId_TextChanged;
             // 
             // txtGrName
             // 

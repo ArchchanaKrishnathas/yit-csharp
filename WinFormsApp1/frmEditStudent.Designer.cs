@@ -132,6 +132,7 @@
             txtFam.Name = "txtFam";
             txtFam.Size = new Size(206, 27);
             txtFam.TabIndex = 53;
+            txtFam.TextChanged += txtFam_TextChanged;
             // 
             // label8
             // 

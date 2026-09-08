@@ -3,6 +3,7 @@ using Mysqlx.Crud;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
 using System.Text;
@@ -13,7 +14,9 @@ namespace WinFormsApp1
 {
     public partial class frmEditStudent : Form
     {
+        string connectionString = ConfigurationManager.ConnectionStrings["MyDbConnection"]?.ConnectionString ?? string.Empty;
         private string studentId;
+        private int? familyId;
         public frmEditStudent(string id)
         {
             InitializeComponent();
@@ -24,8 +27,8 @@ namespace WinFormsApp1
         {
             //txtFname.Text = studentId;
 
-            string connString = "Server=localhost;Database=school;Uid=root;Pwd=;port=3307";
-            MySqlConnection conn = new MySqlConnection(connString);
+            //string connString = "Server=localhost;Database=school;Uid=root;Pwd=;port=3307";
+            MySqlConnection conn = new MySqlConnection(connectionString);
 
             try
             {
@@ -54,7 +57,15 @@ namespace WinFormsApp1
                 cmbHouseName.ValueMember = "id";
 
                 //Students
-                MySqlCommand cmd = new MySqlCommand($"SELECT * FROM students WHERE id = {this.studentId}", conn);
+                //MySqlCommand cmd = new MySqlCommand($"SELECT * FROM students WHERE id = {this.studentId}", conn);
+
+                MySqlCommand cmd = new MySqlCommand(
+    "SELECT students.*, families.mobile_number AS guardian_number " +
+    "FROM students " +
+    "LEFT JOIN families ON students.family_id = families.id " +
+    "WHERE students.id = @id", conn);
+
+                cmd.Parameters.AddWithValue("@id", this.studentId);
 
                 MySqlDataAdapter da = new MySqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
@@ -142,7 +153,7 @@ namespace WinFormsApp1
                 //txtFam.Text = dr["family_id"].ToString();
 
                 // Load families
-                string familyQuery = "SELECT id, mobile_number FROM families";
+                /*string familyQuery = "SELECT id, mobile_number FROM families";
 
                 MySqlDataAdapter familyAdapter = new MySqlDataAdapter(familyQuery, conn);
                 DataTable familyTable = new DataTable();
@@ -151,11 +162,11 @@ namespace WinFormsApp1
                 // Guardian Mobile Number
                 if (dr["family_id"] != DBNull.Value)
                 {
-                    string familyId = dr["family_id"].ToString();
+                    familyId = Convert.ToInt32(dr["family_id"]);
 
                     foreach (DataRow familyRow in familyTable.Rows)
                     {
-                        if (familyRow["id"].ToString() == familyId)
+                        if (Convert.ToInt32(familyRow["id"]) == familyId)
                         {
                             txtFam.Text = familyRow["mobile_number"].ToString();
                             break;
@@ -164,9 +175,30 @@ namespace WinFormsApp1
                 }
                 else
                 {
+                    familyId = null;
                     txtFam.Text = "N/A";
                 }
+*/
+                // Family ID
+                if (dr["family_id"] != DBNull.Value)
+                {
+                    familyId = Convert.ToInt32(dr["family_id"]);
+                }
+                else
+                {
+                    familyId = null;
+                }
 
+                // Guardian Mobile Number
+                if (dr["guardian_number"] != DBNull.Value &&
+                    !string.IsNullOrWhiteSpace(dr["guardian_number"].ToString()))
+                {
+                    txtFam.Text = dr["guardian_number"].ToString();
+                }
+                else
+                {
+                    txtFam.Text = "N/A";
+                }
             }
             catch (Exception ex)
             {
@@ -185,8 +217,8 @@ namespace WinFormsApp1
 
         private void btnUpdate_Click(object sender, EventArgs e)
         {
-            string connString = "Server=localhost;Database=school;Uid=root;Pwd=;port=3307";
-            MySqlConnection conn = new MySqlConnection(connString);
+            //string connString = "Server=localhost;Database=school;Uid=root;Pwd=;port=3307";
+            MySqlConnection conn = new MySqlConnection(connectionString);
 
             try
             {
@@ -224,12 +256,26 @@ namespace WinFormsApp1
                 cmd.Parameters.AddWithValue("@gender", rdbMale.Checked ? "M" : "F");
                 cmd.Parameters.AddWithValue("@admission_number", txtAdmissionNumber.Text);
                 cmd.Parameters.AddWithValue("@nic_number", txtNicNumber.Text);
-                cmd.Parameters.AddWithValue("@family_id", txtFam.Text);
+                cmd.Parameters.AddWithValue("@family_id", familyId.HasValue ? familyId.Value : DBNull.Value);
+
                 cmd.Parameters.AddWithValue("@birth_certificate_number", txtBirthCertificateNumber.Text);
                 cmd.Parameters.AddWithValue("@tele_number", txtTeleNumber.Text);
                 cmd.Parameters.AddWithValue("@id", this.studentId);
 
                 string affectedRow = cmd.ExecuteNonQuery().ToString();
+
+                // Update Guardian Mobile Number
+                if (familyId.HasValue && !string.IsNullOrWhiteSpace(txtFam.Text) && txtFam.Text != "N/A")
+                {
+                    MySqlCommand familyCmd = new MySqlCommand(
+                        "UPDATE families SET mobile_number=@mobile_number WHERE id=@family_id", conn);
+
+                    familyCmd.Parameters.AddWithValue("@mobile_number", txtFam.Text);
+                    familyCmd.Parameters.AddWithValue("@family_id", familyId.Value);
+
+                    familyCmd.ExecuteNonQuery();
+                }
+
 
                 MessageBox.Show("Updated successfully. Rows Affected: " + affectedRow, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -242,6 +288,11 @@ namespace WinFormsApp1
             {
                 conn.Close();
             }
+        }
+
+        private void txtFam_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

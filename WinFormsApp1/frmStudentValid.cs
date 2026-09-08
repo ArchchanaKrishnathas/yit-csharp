@@ -19,7 +19,7 @@ namespace WinFormsApp1
         {
             if (string.IsNullOrEmpty(txtFname.Text))
             {
-                MessageBox.Show("Please enter First Name.","Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Please enter First Name.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 txtFname.Focus();
                 return;
             }
@@ -48,7 +48,7 @@ namespace WinFormsApp1
                 return;
             }
 
-         
+
             // Gender validation
             if (!rbMale.Checked && !rbFemale.Checked)
             {
@@ -89,6 +89,11 @@ namespace WinFormsApp1
             txtNic2.Text = nic;
 
             MessageBox.Show("Student data filled successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+        }
+
+        private void frmStudentValid_Load(object sender, EventArgs e)
+        {
 
         }
     }

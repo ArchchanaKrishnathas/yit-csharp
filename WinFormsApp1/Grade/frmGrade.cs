@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
 using System.Text;
@@ -11,6 +12,7 @@ namespace WinFormsApp1.Grade
 {
     public partial class frmGrade : Form
     {
+        string connectionString = ConfigurationManager.ConnectionStrings["MyDbConnection"]?.ConnectionString ?? string.Empty;
         public frmGrade()
         {
             InitializeComponent();
@@ -18,9 +20,8 @@ namespace WinFormsApp1.Grade
 
         private void btnAllGrades_Click(object sender, EventArgs e)
         {
-            string connString = "Server=localhost;Database=school;Uid=root;Pwd=;port=3307";
-
-            MySqlConnection conn = new MySqlConnection(connString);
+            //string connString = "Server=localhost;Database=school;Uid=root;Pwd=;port=3307";
+            MySqlConnection conn = new MySqlConnection(connectionString);
 
             try
             {
@@ -143,6 +144,11 @@ namespace WinFormsApp1.Grade
                 MessageBox.Show(ex.Message.ToString());
                 throw;
             }
+        }
+
+        private void frmGrade_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

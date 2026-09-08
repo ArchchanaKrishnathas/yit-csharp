@@ -163,6 +163,7 @@
             Name = "frmCalculate";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "frmCalculate";
+            Load += frmCalculate_Load;
             ResumeLayout(false);
             PerformLayout();
         }

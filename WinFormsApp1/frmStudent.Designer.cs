@@ -315,6 +315,7 @@
             Name = "frmStudent";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "frmStudent";
+            Load += frmStudent_Load;
             ResumeLayout(false);
             PerformLayout();
         }

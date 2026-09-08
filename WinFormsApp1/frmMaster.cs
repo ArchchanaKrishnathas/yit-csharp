@@ -68,5 +68,10 @@ namespace WinFormsApp1
             frmGrade fg = new frmGrade();
             fg.ShowDialog();
         }
+
+        private void frmMaster_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

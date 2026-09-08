@@ -167,6 +167,7 @@
             Name = "frmMaster";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "frmMaster";
+            Load += frmMaster_Load;
             ResumeLayout(false);
         }
 

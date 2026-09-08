@@ -229,5 +229,10 @@ namespace WinFormsApp1
             lblError.Text = "";
             timer1.Stop();
         }
+
+        private void frmCalculate_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

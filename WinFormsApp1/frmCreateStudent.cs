@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
 using System.Text;
@@ -11,7 +12,10 @@ namespace WinFormsApp1
 {
     public partial class frmCreateStudent : Form
     {
-        string connString = "Server=localhost;Database=school;Uid=root;Pwd=;port=3307";
+
+        string connectionString = ConfigurationManager.ConnectionStrings["MyDbConnection"]?.ConnectionString ?? string.Empty;
+
+        //string connString = "Server=localhost;Database=school;Uid=root;Pwd=;port=3307";
         public frmCreateStudent()
         {
             InitializeComponent();
@@ -26,7 +30,7 @@ namespace WinFormsApp1
         // Load Grades into ComboBox
         private void LoadGrades()
         {
-            using (MySqlConnection conn = new MySqlConnection(connString))
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 try
                 {
@@ -60,7 +64,7 @@ namespace WinFormsApp1
         // Load Houses into ComboBox
         private void LoadHouses()
         {
-            using (MySqlConnection conn = new MySqlConnection(connString))
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 try
                 {
@@ -94,7 +98,7 @@ namespace WinFormsApp1
 
         private void btnCreate_Click(object sender, EventArgs e)
         {
-            using (MySqlConnection conn = new MySqlConnection(connString))
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 try
                 {

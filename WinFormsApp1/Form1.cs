@@ -61,6 +61,9 @@ namespace WinFormsApp1
 
         }
 
+        private void lblFullName_Click(object sender, EventArgs e)
+        {
 
+        }
     }
 }

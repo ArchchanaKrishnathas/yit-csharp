@@ -24,7 +24,7 @@ namespace WinFormsApp1
             string tpNo = txtTpNo.Text;
             string nic = txtNic.Text;
 
-            string gender = rbMale.Checked ? "Male" :"Female";
+            string gender = rbMale.Checked ? "Male" : "Female";
             /*
             string gender = "";
             
@@ -49,6 +49,11 @@ namespace WinFormsApp1
 
             rbMale2.Checked = gender == "Male";
             rbFemale2.Checked = gender == "Female";
+        }
+
+        private void frmStudent_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

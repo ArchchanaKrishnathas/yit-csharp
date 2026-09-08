@@ -37,7 +37,6 @@
             txtFullName = new TextBox();
             lblShowFullName = new Label();
             SuspendLayout();
-
             // 
             // btnFullName
             // 
@@ -49,7 +48,6 @@
             btnFullName.Text = "Show Full Name";
             btnFullName.UseVisualStyleBackColor = false;
             btnFullName.Click += btnSave_Click;
-
             // 
             // txtFirstName
             // 
@@ -57,19 +55,12 @@
             txtFirstName.Name = "txtFirstName";
             txtFirstName.Size = new Size(225, 27);
             txtFirstName.TabIndex = 0;
-
             // 
             // lblFullName
             // 
             lblFullName.BackColor = Color.Teal;
             lblFullName.Dock = DockStyle.Top;
-            lblFullName.Font = new Font(
-                "Segoe UI",
-                16.2F,
-                FontStyle.Bold,
-                GraphicsUnit.Point,
-                0
-            );
+            lblFullName.Font = new Font("Segoe UI", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblFullName.ForeColor = Color.White;
             lblFullName.Location = new Point(0, 0);
             lblFullName.Name = "lblFullName";
@@ -77,41 +68,27 @@
             lblFullName.TabIndex = 2;
             lblFullName.Text = "Full Name";
             lblFullName.TextAlign = ContentAlignment.MiddleCenter;
-
+            lblFullName.Click += lblFullName_Click;
             // 
             // lblFname
             // 
             lblFname.AutoSize = true;
-            lblFname.Font = new Font(
-                "Segoe UI",
-                12F,
-                FontStyle.Regular,
-                GraphicsUnit.Point,
-                0
-            );
+            lblFname.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblFname.Location = new Point(12, 66);
             lblFname.Name = "lblFname";
             lblFname.Size = new Size(106, 28);
             lblFname.TabIndex = 2;
             lblFname.Text = "First Name";
-
             // 
             // lblLname
             // 
             lblLname.AutoSize = true;
-            lblLname.Font = new Font(
-                "Segoe UI",
-                12F,
-                FontStyle.Regular,
-                GraphicsUnit.Point,
-                0
-            );
+            lblLname.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblLname.Location = new Point(12, 114);
             lblLname.Name = "lblLname";
             lblLname.Size = new Size(103, 28);
             lblLname.TabIndex = 2;
             lblLname.Text = "Last Name";
-
             // 
             // txtlastName
             // 
@@ -119,7 +96,6 @@
             txtlastName.Name = "txtlastName";
             txtlastName.Size = new Size(228, 27);
             txtlastName.TabIndex = 1;
-
             // 
             // txtFullName
             // 
@@ -128,31 +104,22 @@
             txtFullName.ReadOnly = true;
             txtFullName.Size = new Size(231, 27);
             txtFullName.TabIndex = 2;
-
             // 
             // lblShowFullName
             // 
             lblShowFullName.AutoSize = true;
-            lblShowFullName.Font = new Font(
-                "Segoe UI",
-                12F,
-                FontStyle.Regular,
-                GraphicsUnit.Point,
-                0
-            );
+            lblShowFullName.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblShowFullName.Location = new Point(12, 167);
             lblShowFullName.Name = "lblShowFullName";
             lblShowFullName.Size = new Size(100, 28);
             lblShowFullName.TabIndex = 2;
             lblShowFullName.Text = "Full Name";
-
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(366, 279);
-
             Controls.Add(lblShowFullName);
             Controls.Add(lblLname);
             Controls.Add(lblFname);
@@ -161,11 +128,9 @@
             Controls.Add(txtlastName);
             Controls.Add(txtFirstName);
             Controls.Add(btnFullName);
-
             Name = "Form1";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "FullNameForm";
-
             ResumeLayout(false);
             PerformLayout();
         }
