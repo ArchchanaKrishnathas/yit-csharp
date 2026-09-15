@@ -16,7 +16,7 @@ namespace WinFormsApp1
         string connectionString = ConfigurationManager.ConnectionStrings["MyDbConnection"]?.ConnectionString ?? string.Empty;
 
         //string connString = "Server=localhost;Database=school;Uid=root;Pwd=;port=3307";
-        public frmCreateStudent()
+        public frmCreateStudent()   
         {
             InitializeComponent();
         }

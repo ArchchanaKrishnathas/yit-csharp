@@ -46,7 +46,7 @@ namespace WinFormsApp1
             dgvStudents.DataSource = dt;
         }
 
- 
+
         private void LoadGrades()
         {
             string connString = "Server=localhost;Database=school;Uid=root;Pwd=;port=3307";
@@ -192,168 +192,7 @@ namespace WinFormsApp1
             //MessageBox.Show(ex.Message.ToString());
             //throw;
         }
-        /*
-                   try
-                    {
-                        if (dgvStudents.CurrentRow == null)
-                        {
-                            MessageBox.Show("no Data found");
-                            return;
-                        }
-                        string fname = dgvStudents.CurrentRow.Cells["first_name"].Value?.ToString();
-                        txtFname.Text = fname;
-
-                        string lname = dgvStudents.CurrentRow.Cells["last_name"].Value?.ToString();
-                        txtLname.Text = lname;
-
-                        string address = dgvStudents.CurrentRow.Cells["per_address"].Value?.ToString();
-                        if (string.IsNullOrEmpty(address))
-                        {
-                            txtAddress.Text = "N/A";
-                        }
-                        else
-                        {
-                            txtAddress.Text = address;
-                        }
-
-                        // Set the gender radio button 
-                        string gender = dgvStudents.CurrentRow.Cells["gender"].Value?.ToString();
-                        if (gender == "M")
-                        {
-                            rdbMale.Checked = true;
-                        }
-                        else if (gender == "F")
-                        {
-                            rdbFemale.Checked = true;
-                        }
-
-                        // Load the grades into the combo box
-                        string gradeValue = dgvStudents.CurrentRow.Cells["grade_id"].Value?.ToString();
-
-                        if (string.IsNullOrEmpty(gradeValue))
-                        {
-                            cmbGradeName.SelectedIndex = -1;
-                            cmbGradeName.Text = "N/A";
-                        }
-                        else
-                        {
-                            cmbGradeName.SelectedValue = gradeValue;
-                        }
-
-                        // Load the houses into the combo box
-                        string house = "N/A";
-
-                        string houseId = dgvStudents.CurrentRow.Cells["house_id"].Value?.ToString();
-
-                        if (string.IsNullOrEmpty(houseId))
-                        {
-                            cmbHouseName.SelectedIndex = -1;
-                            cmbHouseName.Text = "N/A";
-                        }
-                        else
-                        {
-                            cmbHouseName.SelectedValue = houseId;
-                            house = cmbHouseName.Text;
-                        }
-
-                        // Load the medium into the combo box
-                        string medium = dgvStudents.CurrentRow.Cells["medium"].Value?.ToString();
-
-                        if (string.IsNullOrEmpty(medium))
-                        {
-                            cmbMedium.Text = "N/A";
-                        }
-                        else
-                        {
-                            cmbMedium.Text = medium;
-                        }
-
-
-                        // Load the date of birth
-                        string dob = dgvStudents.CurrentRow.Cells["date_of_birth"].Value?.ToString();
-
-                        if (string.IsNullOrEmpty(dob))
-                        {
-                            dtpDob.Value = DateTime.Today;
-                        }
-                        else
-                        {
-                            dtpDob.Value = Convert.ToDateTime(dob);
-                        }
-
-                        // Load the family ID
-                        string familyId = dgvStudents.CurrentRow.Cells["family_id"].Value?.ToString();
-
-                        if (string.IsNullOrEmpty(familyId))
-                        {
-                            txtFam.Text = "N/A";
-                        }
-                        else
-                        {
-                            txtFam.Text = familyId;
-                        }
-
-                        // Load the admission number
-                        string admissionNumber = dgvStudents.CurrentRow.Cells["admission_number"].Value?.ToString();
-
-                        if (string.IsNullOrEmpty(admissionNumber))
-                        {
-                            txtAdmissionNumber.Text = "N/A";
-                        }
-                        else
-                        {
-                            txtAdmissionNumber.Text = admissionNumber;
-                        }
-
-                        // Load the NIC number
-                        string nicNumber = dgvStudents.CurrentRow.Cells["nic_number"].Value?.ToString();
-
-                        if (string.IsNullOrEmpty(nicNumber))
-                        {
-                            txtNicNumber.Text = "N/A";
-                        }
-                        else
-                        {
-                            txtNicNumber.Text = nicNumber;
-                        }
-
-                        // Load the birth certificate number
-                        string birthCertificateNumber = dgvStudents.CurrentRow.Cells["birth_certificate_number"].Value?.ToString();
-
-                        if (string.IsNullOrEmpty(birthCertificateNumber))
-                        {
-                            txtBirthCertificateNumber.Text = "N/A";
-                        }
-                        else
-                        {
-                            txtBirthCertificateNumber.Text = birthCertificateNumber;
-                        }
-
-                        // Load the telephone number
-                        string teleNumber = dgvStudents.CurrentRow.Cells["tele_number"].Value?.ToString();
-
-                        if (string.IsNullOrEmpty(teleNumber))
-                        {
-                            txtTeleNumber.Text = "N/A";
-                        }
-                        else
-                        {
-                            txtTeleNumber.Text = teleNumber;
-                        }
-                    }
-
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                    }
-                }*/
-        /*  catch (Exception ex)
-            {
-                MessageBox.Show("Please Select a row from the table: ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            } */
-
-
+        
 
 
         private void btnLoadGrade(object sender, EventArgs e)
@@ -458,13 +297,8 @@ namespace WinFormsApp1
 
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            string connString = "Server=localhost;Database=school;Uid=root;Pwd=;port=3307";
-            MySqlConnection conn = new MySqlConnection(connString);
-
             try
             {
-                conn.Open();
-
                 if (dgvStudents.CurrentRow == null)
                 {
                     MessageBox.Show("no Data found");
@@ -473,28 +307,22 @@ namespace WinFormsApp1
 
                 string id = dgvStudents.CurrentRow.Cells["id"].Value?.ToString();
 
-                DialogResult result = MessageBox.Show(
-                    "Are you sure you want to delete this student?",
-                    "Confirm Delete",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Warning);
+                DialogResult result = MessageBox.Show("Are you sure you want to delete this student?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
                 if (result == DialogResult.Yes)
                 {
-                    MySqlCommand cmd = new MySqlCommand($"DELETE FROM students WHERE id = {id}", conn);
-                    int affected = cmd.ExecuteNonQuery();
+                    StudentDal studentDal = new StudentDal();
+
+                    int affected = studentDal.Delete(id);
+
                     MessageBox.Show("Deleted successfully. Rows Affected: " + affected.ToString(), "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 }
-
             }
             catch (Exception ex)
             {
-                MessageBox.Show("An error occurred while connecting the databse: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                conn.Close();
+                MessageBox.Show("An error occurred while deleting student: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
             }
         }
 

@@ -68,5 +68,40 @@ namespace WinFormsApp1.DAL
                 conn.Close();
             }
         }
+
+
+        public int Update(string id, string mobileNumber)
+        {
+            MySqlConnection conn = new MySqlConnection(connString);
+
+            try
+            {
+                conn.Open();
+
+                MySqlCommand cmd = new MySqlCommand(
+                    "UPDATE families SET mobile_number=@mobile_number " +
+                    "WHERE id=@id",
+                    conn);
+
+                cmd.Parameters.AddWithValue("@mobile_number", mobileNumber);
+                cmd.Parameters.AddWithValue("@id", id);
+
+                return cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "An error occurred while updating family: " + ex.Message,
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+
+                return 0;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
     }
 }
