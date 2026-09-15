@@ -7,6 +7,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using WinFormsApp1.DAL;
 
 namespace WinFormsApp1
 {
@@ -40,30 +41,12 @@ namespace WinFormsApp1
 
         private void btnStudents_Click(object sender, EventArgs e)
         {
-            string connString = "Server=localhost;Database=school;Uid=root;Pwd=;port=3307";
-            MySqlConnection conn = new MySqlConnection(connString);
-
-            try
-            {
-                conn.Open();
-                MySqlCommand cmd = new MySqlCommand("SELECT * FROM students", conn);
-
-                MySqlDataAdapter da = new MySqlDataAdapter(cmd);
-                DataTable dt = new DataTable();
-                da.Fill(dt);
-                dgvStudents.DataSource = dt;
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("An error occurred while connecting the databse: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                conn.Close();
-            }
+            StudentDal studentDal = new StudentDal();
+            DataTable dt = studentDal.GetAll();
+            dgvStudents.DataSource = dt;
         }
 
+ 
         private void LoadGrades()
         {
             string connString = "Server=localhost;Database=school;Uid=root;Pwd=;port=3307";
