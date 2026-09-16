@@ -100,5 +100,70 @@ namespace WinFormsApp1.DAL
             }
 
         }
+        public int Delete(string id)
+        {
+            MySqlConnection conn = new MySqlConnection(connString);
+
+            try
+            {
+                conn.Open();
+
+                MySqlCommand cmd = new MySqlCommand($"DELETE FROM grades WHERE id = {id}", conn);
+                return cmd.ExecuteNonQuery();
+                
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred while connecting the databse: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return 0;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+           
+        }
+
+
+        public int Store(string gradeName, string gradeGroup, string gradeOrder, string colour)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connString))
+            {
+                try
+                {
+                    conn.Open();
+
+                    MySqlCommand cmd = new MySqlCommand(
+                            "INSERT INTO grades " +
+                            "(grade_name, grade_group, grade_order, colour) " +
+                            "VALUES " +
+                            "(@gradeName, @gradeGroup, @gradeOrder, @colour)",
+                            conn);
+
+                    cmd.Parameters.AddWithValue("@gradeName", gradeName);
+                    cmd.Parameters.AddWithValue("@gradeGroup", gradeGroup);
+                    cmd.Parameters.AddWithValue("@gradeOrder", gradeOrder);
+                    cmd.Parameters.AddWithValue("@colour", colour);
+
+                    return cmd.ExecuteNonQuery();
+                   
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("An error occurred while connecting the database: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return 0; 
+                }
+                finally
+                {
+                    conn.Close();
+                }
+
+            }
+
+                
+        }
+
     }
 }

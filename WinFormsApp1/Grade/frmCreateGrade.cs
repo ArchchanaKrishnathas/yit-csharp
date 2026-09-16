@@ -7,6 +7,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using WinFormsApp1.DAL;
 
 namespace WinFormsApp1.Grade
 {
@@ -27,41 +28,36 @@ namespace WinFormsApp1.Grade
 
         private void btnInsert_Click(object sender, EventArgs e)
         {
-            //string connString = "Server=localhost;Database=school;Uid=root;Pwd=;port=3307";
-            MySqlConnection conn = new MySqlConnection(connectionString);
 
             try
             {
-                conn.Open();
-
                 // Convert selected color to HEX
                 string colour =
                     $"#{pnlColor.BackColor.R:X2}" +
                     $"{pnlColor.BackColor.G:X2}" +
                     $"{pnlColor.BackColor.B:X2}";
 
-                MySqlCommand cmd = new MySqlCommand(
-                    $"INSERT INTO grades " +
-                    $"(grade_name, grade_group, grade_order, colour) " +
-                    $"VALUES " +
-                    $"('{txtGrName.Text}', '{txtGrGroup.Text}', '{txtGrOrder.Text}', '{colour}')", conn);
 
+                GradeDal gradeDAL = new GradeDal();
 
-                string affectedRow = cmd.ExecuteNonQuery().ToString();
+                int affectedRows = gradeDAL.Store(txtGrName.Text, txtGrGroup.Text, txtGrOrder.Text, colour);
 
-                MessageBox.Show(
-                    "Inserted successfully. Rows Affected: " + affectedRow,
-                    "Success",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information);
+                if (affectedRows > 0)
+                {
+                    MessageBox.Show(
+                        "Inserted successfully. Rows Affected: " + affectedRows,
+                        "Success",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
 
-                // Clear fields
-                txtGrName.Clear();
-                txtGrGroup.Clear();
-                txtGrOrder.Clear();
+                    // Clear fields
+                    txtGrName.Clear();
+                    txtGrGroup.Clear();
+                    txtGrOrder.Clear();
 
-                // Reset color
-                pnlColor.BackColor = Color.White;
+                    // Reset color
+                    pnlColor.BackColor = Color.White;
+                }
             }
             catch (Exception ex)
             {
@@ -72,11 +68,12 @@ namespace WinFormsApp1.Grade
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
-            finally
-            {
-                conn.Close();
-            }
+           
+
+
         }
+
+        
 
         private void btnChooseColor_Click(object sender, EventArgs e)
         {

@@ -169,68 +169,68 @@ namespace WinFormsApp1.DAL
 
 
         public int Store(
-    string firstName,
-    string lastName,
-    string address,
-    int gradeId,
-    int houseId,
-    string medium,
-    DateTime dateOfBirth,
-    int familyId,
-    string gender,
-    string admissionNumber,
-    string nicNumber,
-    string birthCertificateNumber,
-    string telephoneNumber)
-        {
-            MySqlConnection conn = new MySqlConnection(connString);
+            string firstName,
+            string lastName,
+            string address,
+            int gradeId,
+            int houseId,
+            string medium,
+            DateTime dateOfBirth,
+            int familyId,
+            string gender,
+            string admissionNumber,
+            string nicNumber,
+            string birthCertificateNumber,
+            string telephoneNumber)
+                {
+                    MySqlConnection conn = new MySqlConnection(connString);
 
-            try
-            {
-                conn.Open();
+                    try
+                    {
+                        conn.Open();
 
-                MySqlCommand cmd = new MySqlCommand(
-                    "INSERT INTO students " +
-                    "(first_name, last_name, per_address, grade_id, house_id, medium, " +
-                    "date_of_birth, family_id, gender, admission_number, nic_number, " +
-                    "birth_certificate_number, tele_number) " +
-                    "VALUES " +
-                    "(@first_name, @last_name, @per_address, @grade_id, @house_id, @medium, " +
-                    "@date_of_birth, @family_id, @gender, @admission_number, @nic_number, " +
-                    "@birth_certificate_number, @tele_number)",
-                    conn);
+                        MySqlCommand cmd = new MySqlCommand(
+                            "INSERT INTO students " +
+                            "(first_name, last_name, per_address, grade_id, house_id, medium, " +
+                            "date_of_birth, family_id, gender, admission_number, nic_number, " +
+                            "birth_certificate_number, tele_number) " +
+                            "VALUES " +
+                            "(@first_name, @last_name, @per_address, @grade_id, @house_id, @medium, " +
+                            "@date_of_birth, @family_id, @gender, @admission_number, @nic_number, " +
+                            "@birth_certificate_number, @tele_number)",
+                            conn);
 
-                cmd.Parameters.AddWithValue("@first_name", firstName);
-                cmd.Parameters.AddWithValue("@last_name", lastName);
-                cmd.Parameters.AddWithValue("@per_address", address);
-                cmd.Parameters.AddWithValue("@grade_id", gradeId);
-                cmd.Parameters.AddWithValue("@house_id", houseId);
-                cmd.Parameters.AddWithValue("@medium", medium);
-                cmd.Parameters.AddWithValue("@date_of_birth", dateOfBirth);
-                cmd.Parameters.AddWithValue("@family_id", familyId);
-                cmd.Parameters.AddWithValue("@gender", gender);
-                cmd.Parameters.AddWithValue("@admission_number", admissionNumber);
-                cmd.Parameters.AddWithValue("@nic_number", nicNumber);
-                cmd.Parameters.AddWithValue("@birth_certificate_number", birthCertificateNumber);
-                cmd.Parameters.AddWithValue("@tele_number", telephoneNumber);
+                        cmd.Parameters.AddWithValue("@first_name", firstName);
+                        cmd.Parameters.AddWithValue("@last_name", lastName);
+                        cmd.Parameters.AddWithValue("@per_address", address);
+                        cmd.Parameters.AddWithValue("@grade_id", gradeId);
+                        cmd.Parameters.AddWithValue("@house_id", houseId);
+                        cmd.Parameters.AddWithValue("@medium", medium);
+                        cmd.Parameters.AddWithValue("@date_of_birth", dateOfBirth);
+                        cmd.Parameters.AddWithValue("@family_id", familyId);
+                        cmd.Parameters.AddWithValue("@gender", gender);
+                        cmd.Parameters.AddWithValue("@admission_number", admissionNumber);
+                        cmd.Parameters.AddWithValue("@nic_number", nicNumber);
+                        cmd.Parameters.AddWithValue("@birth_certificate_number", birthCertificateNumber);
+                        cmd.Parameters.AddWithValue("@tele_number", telephoneNumber);
 
-                return cmd.ExecuteNonQuery();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(
-                    "An error occurred while storing student: " + ex.Message,
-                    "Error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
+                        return cmd.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(
+                            "An error occurred while storing student: " + ex.Message,
+                            "Error",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
 
-                return 0;
-            }
-            finally
-            {
-                conn.Close();
-            }
-        }
+                        return 0;
+                    }
+                    finally
+                    {
+                        conn.Close();
+                    }
+                }
 
     }
 }
