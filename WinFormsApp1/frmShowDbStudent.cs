@@ -148,7 +148,9 @@ namespace WinFormsApp1
 
         }
 
+        private void txtFname_TextChanged(object sender, EventArgs e)
+        {
 
-      
+        }
     }
 }

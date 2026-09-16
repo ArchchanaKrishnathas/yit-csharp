@@ -7,6 +7,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using WinFormsApp1.DAL;
 
 namespace WinFormsApp1
 {
@@ -16,7 +17,7 @@ namespace WinFormsApp1
         string connectionString = ConfigurationManager.ConnectionStrings["MyDbConnection"]?.ConnectionString ?? string.Empty;
 
         //string connString = "Server=localhost;Database=school;Uid=root;Pwd=;port=3307";
-        public frmCreateStudent()   
+        public frmCreateStudent()
         {
             InitializeComponent();
         }
@@ -161,109 +162,67 @@ namespace WinFormsApp1
                     // Convert foreign keys to integers
                     int gradeId = Convert.ToInt32(cmbGradeName.SelectedValue);
                     int houseId = Convert.ToInt32(cmbHouseName.SelectedValue);
-                    //int familyId = Convert.ToInt32(txtGuardianNumber.Text);
+                    
                     string guardianNumber = txtGuardianNumber.Text.Trim();
 
-                    conn.Open();
+                    FamilyDal familyDal = new FamilyDal();
 
-                    // Get family ID
-                    int familyId;
+                    int familyId = familyDal.Store(guardianNumber);
 
-                    string familyQuery = "SELECT id FROM families WHERE mobile_number = @guardian_number";
-
-                    using (MySqlCommand familyCmd = new MySqlCommand(familyQuery, conn))
+                    if (familyId == 0)
                     {
-                        familyCmd.Parameters.AddWithValue("@guardian_number", guardianNumber);
-
-                        object result = familyCmd.ExecuteScalar();
-
-                        if (result != null)
-                        {
-                            familyId = Convert.ToInt32(result);
-                        }
-                        else
-                        {
-                            string insertFamilyQuery =
-                                "INSERT INTO families (mobile_number) VALUES (@guardian_number); " +
-                                "SELECT LAST_INSERT_ID();";
-
-                            using (MySqlCommand insertFamilyCmd =
-                                   new MySqlCommand(insertFamilyQuery, conn))
-                            {
-                                insertFamilyCmd.Parameters.AddWithValue(
-                                    "@guardian_number", guardianNumber);
-
-                                familyId = Convert.ToInt32(
-                                    insertFamilyCmd.ExecuteScalar());
-                            }
-                        }
+                        MessageBox.Show("Family was not stored.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
                     }
 
-                    string query =
-                        "INSERT INTO students " +
-                        "(first_name, last_name, per_address, grade_id, house_id, medium, " +
-                        "date_of_birth, family_id, gender, admission_number, nic_number, " +
-                        "birth_certificate_number, tele_number) " +
-                        "VALUES " +
-                        "(@first_name, @last_name, @per_address, @grade_id, @house_id, @medium, " +
-                        "@date_of_birth, @family_id, @gender, @admission_number, @nic_number, " +
-                        "@birth_certificate_number, @tele_number)";
+                    StudentDal studentDal = new StudentDal();
 
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    int affected = studentDal.Store(
+                        txtFname.Text.Trim(),
+                        txtLname.Text.Trim(),
+                        txtAddress.Text.Trim(),
+                        gradeId,
+                        houseId,
+                        cmbMedium.Text.Trim(),
+                        dtpDob.Value.Date,
+                        familyId,
+                        rdbMale.Checked ? "M" : "F",
+                        txtAdmissionNumber.Text.Trim(),
+                        txtNicNumber.Text.Trim(),
+                        txtBirthCertificateNumber.Text.Trim(),
+                        txtTeleNumber.Text.Trim()
+                    );
+
+                    if (affected > 0)
                     {
-                        cmd.Parameters.AddWithValue("@first_name", txtFname.Text.Trim());
-                        cmd.Parameters.AddWithValue("@last_name", txtLname.Text.Trim());
-                        cmd.Parameters.AddWithValue("@per_address", txtAddress.Text.Trim());
-                        cmd.Parameters.AddWithValue("@grade_id", gradeId);
-                        cmd.Parameters.AddWithValue("@house_id", houseId);
-                        cmd.Parameters.AddWithValue("@medium", cmbMedium.Text.Trim());
-                        cmd.Parameters.AddWithValue("@date_of_birth", dtpDob.Value.Date);
-                        cmd.Parameters.AddWithValue("@family_id", familyId);
-                        cmd.Parameters.AddWithValue("@gender", rdbMale.Checked ? "M" : "F");
-                        cmd.Parameters.AddWithValue("@admission_number", txtAdmissionNumber.Text.Trim());
-                        cmd.Parameters.AddWithValue("@nic_number", txtNicNumber.Text.Trim());
-                        cmd.Parameters.AddWithValue("@birth_certificate_number", txtBirthCertificateNumber.Text.Trim());
-                        cmd.Parameters.AddWithValue("@tele_number", txtTeleNumber.Text.Trim());
+                        MessageBox.Show("Student inserted successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                        int affected = cmd.ExecuteNonQuery();
+                        // Clear form
+                        txtFname.Clear();
+                        txtLname.Clear();
+                        txtAddress.Clear();
+                        txtGuardianNumber.Clear();
+                        txtAdmissionNumber.Clear();
+                        txtNicNumber.Clear();
+                        txtBirthCertificateNumber.Clear();
+                        txtTeleNumber.Clear();
 
-                        if (affected > 0)
-                        {
-                            MessageBox.Show(
-                                "Student inserted successfully.",
-                                "Success",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Information);
+                        cmbGradeName.SelectedIndex = -1;
+                        cmbHouseName.SelectedIndex = -1;
+                        cmbMedium.SelectedIndex = -1;
 
-                            // Clear form
-                            txtFname.Clear();
-                            txtLname.Clear();
-                            txtAddress.Clear();
-                            txtGuardianNumber.Clear();
-                            txtAdmissionNumber.Clear();
-                            txtNicNumber.Clear();
-                            txtBirthCertificateNumber.Clear();
-                            txtTeleNumber.Clear();
+                        rdbMale.Checked = false;
+                        rdbFemale.Checked = false;
 
-                            cmbGradeName.SelectedIndex = -1;
-                            cmbHouseName.SelectedIndex = -1;
-                            cmbMedium.SelectedIndex = -1;
+                        dtpDob.Value = DateTime.Now;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Student was not inserted.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
-                            rdbMale.Checked = false;
-                            rdbFemale.Checked = false;
-
-                            dtpDob.Value = DateTime.Now;
-                        }
-                        else
-                        {
-                            MessageBox.Show(
-                                "Student was not inserted.",
-                                "Warning",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Warning);
-                        }
                     }
                 }
+
                 catch (FormatException)
                 {
                     MessageBox.Show(

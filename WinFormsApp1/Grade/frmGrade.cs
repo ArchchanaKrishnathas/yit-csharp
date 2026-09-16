@@ -7,6 +7,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using WinFormsApp1.DAL;     
 
 namespace WinFormsApp1.Grade
 {
@@ -20,32 +21,12 @@ namespace WinFormsApp1.Grade
 
         private void btnAllGrades_Click(object sender, EventArgs e)
         {
-            //string connString = "Server=localhost;Database=school;Uid=root;Pwd=;port=3307";
-            MySqlConnection conn = new MySqlConnection(connectionString);
-
-            try
-            {
-                conn.Open();
-
-                MySqlCommand cmd = new MySqlCommand("SELECT * FROM grades", conn);
-
-                MySqlDataAdapter da = new MySqlDataAdapter(cmd);
-
-                DataTable dt = new DataTable();
-                da.Fill(dt);
-                dgvGrades.DataSource = dt;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(
-                    "An error occurred while loading grades: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            finally
-            {
-                conn.Close();
-            }
+            GradeDal gradeDal = new GradeDal();
+            DataTable gradesTable = gradeDal. GetAll();
+            dgvGrades.DataSource = gradesTable;
         }
 
+        
         private void btnShow_Click(object sender, EventArgs e)
         {
 

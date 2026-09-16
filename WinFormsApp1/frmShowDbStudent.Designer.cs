@@ -267,6 +267,7 @@
             txtFname.Name = "txtFname";
             txtFname.Size = new Size(206, 27);
             txtFname.TabIndex = 36;
+            txtFname.TextChanged += txtFname_TextChanged;
             // 
             // label3
             // 

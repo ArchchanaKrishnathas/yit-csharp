@@ -103,5 +103,56 @@ namespace WinFormsApp1.DAL
                 conn.Close();
             }
         }
+
+
+
+        public int Store(string mobileNumber)
+        {
+            MySqlConnection conn = new MySqlConnection(connString);
+
+            try
+            {
+                conn.Open();
+
+                // Check whether family already exists
+                MySqlCommand checkCmd = new MySqlCommand(
+                    "SELECT id FROM families WHERE mobile_number = @mobile_number",
+                    conn);
+
+                checkCmd.Parameters.AddWithValue("@mobile_number", mobileNumber);
+
+                object result = checkCmd.ExecuteScalar();
+
+                if (result != null)
+                {
+                    return Convert.ToInt32(result);
+                }
+
+                // Insert new family
+                MySqlCommand cmd = new MySqlCommand(
+                    "INSERT INTO families (mobile_number) " +
+                    "VALUES (@mobile_number); " +
+                    "SELECT LAST_INSERT_ID();",
+                    conn);
+
+                cmd.Parameters.AddWithValue("@mobile_number", mobileNumber);
+
+                return Convert.ToInt32(cmd.ExecuteScalar());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "An error occurred while storing family: " + ex.Message,
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+
+                return 0;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
     }
 }

@@ -47,75 +47,11 @@ namespace WinFormsApp1
         }
 
 
-        private void LoadGrades()
-        {
-            string connString = "Server=localhost;Database=school;Uid=root;Pwd=;port=3307";
-
-            MySqlConnection conn = new MySqlConnection(connString);
-
-            try
-            {
-                conn.Open();
-
-                MySqlCommand cmd = new MySqlCommand("SELECT id, grade_name FROM grades", conn);
-
-                MySqlDataAdapter da = new MySqlDataAdapter(cmd);
-
-                DataTable dt = new DataTable();
-                da.Fill(dt);
-
-                cmbGradeName.DataSource = dt;
-                cmbGradeName.DisplayMember = "grade_name";
-                cmbGradeName.ValueMember = "id";
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(
-                    "An error occurred while loading grades: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-            }
-            finally
-            {
-                conn.Close();
-            }
-        }
-
-        private void LoadHouses()
-        {
-            string connString = "Server=localhost;Database=school;Uid=root;Pwd=;port=3307";
-
-            try
-            {
-                using (MySqlConnection conn = new MySqlConnection(connString))
-                {
-                    conn.Open();
-
-                    string query = "SELECT id, house_name FROM houses";
-
-                    MySqlDataAdapter da = new MySqlDataAdapter(query, conn);
-
-                    DataTable dt = new DataTable();
-                    da.Fill(dt);
-
-                    cmbHouseName.DataSource = dt;
-                    cmbHouseName.DisplayMember = "house_name";
-                    cmbHouseName.ValueMember = "id";
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(
-                    "An error occurred while loading houses: " + ex.Message,
-                    "Error",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-            }
-        }
+     
 
         private void frmConnect_Load(object sender, EventArgs e)
         {
-            LoadGrades();
-            LoadHouses();
+           
         }
 
         private void btnShow_Click(object sender, EventArgs e)
