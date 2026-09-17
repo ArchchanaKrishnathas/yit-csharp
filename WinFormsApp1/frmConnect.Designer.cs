@@ -66,6 +66,7 @@
             btnEdit = new Button();
             btnDelete = new Button();
             btnInsert = new Button();
+            btnSubjects = new Button();
             ((System.ComponentModel.ISupportInitialize)dgvStudents).BeginInit();
             SuspendLayout();
             // 
@@ -83,7 +84,7 @@
             // btnStudents
             // 
             btnStudents.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnStudents.Location = new Point(588, 31);
+            btnStudents.Location = new Point(651, 30);
             btnStudents.Name = "btnStudents";
             btnStudents.Size = new Size(114, 41);
             btnStudents.TabIndex = 1;
@@ -97,13 +98,13 @@
             dgvStudents.Location = new Point(12, 95);
             dgvStudents.Name = "dgvStudents";
             dgvStudents.RowHeadersWidth = 51;
-            dgvStudents.Size = new Size(690, 623);
+            dgvStudents.Size = new Size(753, 623);
             dgvStudents.TabIndex = 2;
             // 
             // btnShow
             // 
             btnShow.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnShow.Location = new Point(267, 31);
+            btnShow.Location = new Point(252, 31);
             btnShow.Name = "btnShow";
             btnShow.Size = new Size(114, 41);
             btnShow.TabIndex = 3;
@@ -115,7 +116,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(742, 95);
+            label1.Location = new Point(786, 95);
             label1.Name = "label1";
             label1.Size = new Size(97, 25);
             label1.TabIndex = 4;
@@ -125,7 +126,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label2.Location = new Point(744, 143);
+            label2.Location = new Point(788, 143);
             label2.Name = "label2";
             label2.Size = new Size(95, 25);
             label2.TabIndex = 5;
@@ -135,7 +136,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label3.Location = new Point(744, 191);
+            label3.Location = new Point(788, 191);
             label3.Name = "label3";
             label3.Size = new Size(77, 25);
             label3.TabIndex = 6;
@@ -143,21 +144,21 @@
             // 
             // txtFname
             // 
-            txtFname.Location = new Point(902, 95);
+            txtFname.Location = new Point(946, 95);
             txtFname.Name = "txtFname";
             txtFname.Size = new Size(206, 27);
             txtFname.TabIndex = 7;
             // 
             // txtLname
             // 
-            txtLname.Location = new Point(902, 140);
+            txtLname.Location = new Point(946, 140);
             txtLname.Name = "txtLname";
             txtLname.Size = new Size(206, 27);
             txtLname.TabIndex = 8;
             // 
             // txtAddress
             // 
-            txtAddress.Location = new Point(902, 185);
+            txtAddress.Location = new Point(946, 185);
             txtAddress.Name = "txtAddress";
             txtAddress.Size = new Size(206, 27);
             txtAddress.TabIndex = 9;
@@ -166,7 +167,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 10.8F);
-            label4.Location = new Point(744, 239);
+            label4.Location = new Point(788, 239);
             label4.Name = "label4";
             label4.Size = new Size(59, 25);
             label4.TabIndex = 10;
@@ -175,7 +176,7 @@
             // cmbGradeName
             // 
             cmbGradeName.FormattingEnabled = true;
-            cmbGradeName.Location = new Point(902, 230);
+            cmbGradeName.Location = new Point(946, 230);
             cmbGradeName.Name = "cmbGradeName";
             cmbGradeName.Size = new Size(206, 28);
             cmbGradeName.TabIndex = 11;
@@ -184,7 +185,7 @@
             // allGrades
             // 
             allGrades.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            allGrades.Location = new Point(147, 31);
+            allGrades.Location = new Point(132, 30);
             allGrades.Name = "allGrades";
             allGrades.Size = new Size(114, 41);
             allGrades.TabIndex = 3;
@@ -194,7 +195,7 @@
             // 
             // button1
             // 
-            button1.Location = new Point(904, 275);
+            button1.Location = new Point(948, 275);
             button1.Name = "button1";
             button1.Size = new Size(75, 29);
             button1.TabIndex = 12;
@@ -204,7 +205,7 @@
             // 
             // button2
             // 
-            button2.Location = new Point(1033, 275);
+            button2.Location = new Point(1077, 275);
             button2.Name = "button2";
             button2.Size = new Size(75, 29);
             button2.TabIndex = 13;
@@ -216,7 +217,7 @@
             // 
             gender.AutoSize = true;
             gender.Font = new Font("Segoe UI", 10.8F);
-            gender.Location = new Point(744, 318);
+            gender.Location = new Point(788, 318);
             gender.Name = "gender";
             gender.Size = new Size(69, 25);
             gender.TabIndex = 14;
@@ -225,7 +226,7 @@
             // rdbMale
             // 
             rdbMale.AutoSize = true;
-            rdbMale.Location = new Point(904, 320);
+            rdbMale.Location = new Point(948, 320);
             rdbMale.Name = "rdbMale";
             rdbMale.Size = new Size(63, 24);
             rdbMale.TabIndex = 15;
@@ -236,7 +237,7 @@
             // rdbFemale
             // 
             rdbFemale.AutoSize = true;
-            rdbFemale.Location = new Point(1030, 320);
+            rdbFemale.Location = new Point(1074, 320);
             rdbFemale.Name = "rdbFemale";
             rdbFemale.Size = new Size(78, 24);
             rdbFemale.TabIndex = 16;
@@ -248,7 +249,7 @@
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 10.8F);
-            label5.Location = new Point(744, 363);
+            label5.Location = new Point(788, 363);
             label5.Name = "label5";
             label5.Size = new Size(63, 25);
             label5.TabIndex = 17;
@@ -257,7 +258,7 @@
             // cmbHouseName
             // 
             cmbHouseName.FormattingEnabled = true;
-            cmbHouseName.Location = new Point(902, 354);
+            cmbHouseName.Location = new Point(946, 354);
             cmbHouseName.Name = "cmbHouseName";
             cmbHouseName.Size = new Size(206, 28);
             cmbHouseName.TabIndex = 18;
@@ -266,7 +267,7 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI", 10.8F);
-            label6.Location = new Point(742, 408);
+            label6.Location = new Point(786, 408);
             label6.Name = "label6";
             label6.Size = new Size(78, 25);
             label6.TabIndex = 19;
@@ -276,7 +277,7 @@
             // 
             cmbMedium.FormattingEnabled = true;
             cmbMedium.Items.AddRange(new object[] { "Tamil", "English" });
-            cmbMedium.Location = new Point(902, 401);
+            cmbMedium.Location = new Point(946, 401);
             cmbMedium.Name = "cmbMedium";
             cmbMedium.Size = new Size(204, 28);
             cmbMedium.TabIndex = 20;
@@ -285,7 +286,7 @@
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI", 10.8F);
-            label7.Location = new Point(742, 453);
+            label7.Location = new Point(786, 453);
             label7.Name = "label7";
             label7.Size = new Size(49, 25);
             label7.TabIndex = 21;
@@ -294,7 +295,7 @@
             // dtpDob
             // 
             dtpDob.Format = DateTimePickerFormat.Short;
-            dtpDob.Location = new Point(904, 448);
+            dtpDob.Location = new Point(948, 448);
             dtpDob.Name = "dtpDob";
             dtpDob.Size = new Size(204, 27);
             dtpDob.TabIndex = 22;
@@ -303,7 +304,7 @@
             // 
             label8.AutoSize = true;
             label8.Font = new Font("Segoe UI", 10.8F);
-            label8.Location = new Point(742, 498);
+            label8.Location = new Point(786, 498);
             label8.Name = "label8";
             label8.Size = new Size(85, 25);
             label8.TabIndex = 23;
@@ -311,7 +312,7 @@
             // 
             // txtFam
             // 
-            txtFam.Location = new Point(904, 494);
+            txtFam.Location = new Point(948, 494);
             txtFam.Name = "txtFam";
             txtFam.Size = new Size(206, 27);
             txtFam.TabIndex = 24;
@@ -320,7 +321,7 @@
             // 
             label9.AutoSize = true;
             label9.Font = new Font("Segoe UI", 10.8F);
-            label9.Location = new Point(742, 540);
+            label9.Location = new Point(786, 540);
             label9.Name = "label9";
             label9.Size = new Size(125, 25);
             label9.TabIndex = 25;
@@ -328,7 +329,7 @@
             // 
             // txtAdmissionNumber
             // 
-            txtAdmissionNumber.Location = new Point(904, 540);
+            txtAdmissionNumber.Location = new Point(948, 540);
             txtAdmissionNumber.Name = "txtAdmissionNumber";
             txtAdmissionNumber.Size = new Size(206, 27);
             txtAdmissionNumber.TabIndex = 26;
@@ -337,7 +338,7 @@
             // 
             label10.AutoSize = true;
             label10.Font = new Font("Segoe UI", 10.8F);
-            label10.Location = new Point(742, 588);
+            label10.Location = new Point(786, 588);
             label10.Name = "label10";
             label10.Size = new Size(70, 25);
             label10.TabIndex = 27;
@@ -345,7 +346,7 @@
             // 
             // txtNicNumber
             // 
-            txtNicNumber.Location = new Point(904, 586);
+            txtNicNumber.Location = new Point(948, 586);
             txtNicNumber.Name = "txtNicNumber";
             txtNicNumber.Size = new Size(206, 27);
             txtNicNumber.TabIndex = 28;
@@ -354,7 +355,7 @@
             // 
             label11.AutoSize = true;
             label11.Font = new Font("Segoe UI", 10.8F);
-            label11.Location = new Point(742, 632);
+            label11.Location = new Point(786, 632);
             label11.Name = "label11";
             label11.Size = new Size(160, 25);
             label11.TabIndex = 29;
@@ -362,7 +363,7 @@
             // 
             // txtBirthCertificateNumber
             // 
-            txtBirthCertificateNumber.Location = new Point(902, 632);
+            txtBirthCertificateNumber.Location = new Point(946, 632);
             txtBirthCertificateNumber.Name = "txtBirthCertificateNumber";
             txtBirthCertificateNumber.Size = new Size(206, 27);
             txtBirthCertificateNumber.TabIndex = 30;
@@ -371,7 +372,7 @@
             // 
             label12.AutoSize = true;
             label12.Font = new Font("Segoe UI", 10.8F);
-            label12.Location = new Point(742, 678);
+            label12.Location = new Point(786, 678);
             label12.Name = "label12";
             label12.Size = new Size(70, 25);
             label12.TabIndex = 31;
@@ -379,7 +380,7 @@
             // 
             // txtTeleNumber
             // 
-            txtTeleNumber.Location = new Point(902, 678);
+            txtTeleNumber.Location = new Point(946, 678);
             txtTeleNumber.Name = "txtTeleNumber";
             txtTeleNumber.Size = new Size(206, 27);
             txtTeleNumber.TabIndex = 32;
@@ -387,9 +388,9 @@
             // btnDbShow
             // 
             btnDbShow.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnDbShow.Location = new Point(387, 31);
+            btnDbShow.Location = new Point(372, 31);
             btnDbShow.Name = "btnDbShow";
-            btnDbShow.Size = new Size(141, 41);
+            btnDbShow.Size = new Size(109, 41);
             btnDbShow.TabIndex = 33;
             btnDbShow.Text = "DB Show";
             btnDbShow.UseVisualStyleBackColor = true;
@@ -397,42 +398,59 @@
             // 
             // btnEdit
             // 
+            btnEdit.BackColor = Color.Teal;
             btnEdit.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnEdit.Location = new Point(973, 31);
+            btnEdit.ForeColor = Color.White;
+            btnEdit.Location = new Point(1053, 30);
             btnEdit.Name = "btnEdit";
             btnEdit.Size = new Size(101, 41);
             btnEdit.TabIndex = 34;
             btnEdit.Text = "Edit";
-            btnEdit.UseVisualStyleBackColor = true;
+            btnEdit.UseVisualStyleBackColor = false;
             btnEdit.Click += btnEdit_Click;
             // 
             // btnDelete
             // 
+            btnDelete.BackColor = Color.Red;
             btnDelete.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnDelete.Location = new Point(866, 31);
+            btnDelete.ForeColor = Color.White;
+            btnDelete.Location = new Point(946, 30);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(101, 40);
             btnDelete.TabIndex = 35;
             btnDelete.Text = "Delete";
-            btnDelete.UseVisualStyleBackColor = true;
+            btnDelete.UseVisualStyleBackColor = false;
             btnDelete.Click += btnDelete_Click;
             // 
             // btnInsert
             // 
+            btnInsert.BackColor = Color.LightGreen;
             btnInsert.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnInsert.Location = new Point(759, 30);
+            btnInsert.Location = new Point(839, 29);
             btnInsert.Name = "btnInsert";
             btnInsert.Size = new Size(101, 41);
             btnInsert.TabIndex = 36;
             btnInsert.Text = "Insert";
-            btnInsert.UseVisualStyleBackColor = true;
+            btnInsert.UseVisualStyleBackColor = false;
             btnInsert.Click += btnInsert_Click;
+            // 
+            // btnSubjects
+            // 
+            btnSubjects.Font = new Font("Segoe UI", 10.8F);
+            btnSubjects.Location = new Point(487, 31);
+            btnSubjects.Name = "btnSubjects";
+            btnSubjects.Size = new Size(126, 41);
+            btnSubjects.TabIndex = 37;
+            btnSubjects.Text = "Add Subjects";
+            btnSubjects.UseVisualStyleBackColor = true;
+            btnSubjects.Click += btnSubjects_Click;
             // 
             // frmConnect
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1130, 729);
+            ClientSize = new Size(1166, 729);
+            Controls.Add(btnSubjects);
             Controls.Add(btnInsert);
             Controls.Add(btnDelete);
             Controls.Add(btnEdit);
@@ -520,5 +538,6 @@
         private Button btnEdit;
         private Button btnDelete;
         private Button btnInsert;
+        private Button btnSubjects;
     }
 }

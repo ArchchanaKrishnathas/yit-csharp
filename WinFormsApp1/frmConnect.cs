@@ -47,11 +47,11 @@ namespace WinFormsApp1
         }
 
 
-     
+
 
         private void frmConnect_Load(object sender, EventArgs e)
         {
-           
+
         }
 
         private void btnShow_Click(object sender, EventArgs e)
@@ -128,7 +128,7 @@ namespace WinFormsApp1
             //MessageBox.Show(ex.Message.ToString());
             //throw;
         }
-        
+
 
 
         private void btnLoadGrade(object sender, EventArgs e)
@@ -275,7 +275,30 @@ namespace WinFormsApp1
                 throw;
             }
 
-            
+
+        }
+
+        private void btnSubjects_Click(object sender, EventArgs e)
+        {
+
+            try
+            {
+                if (dgvStudents.CurrentRow == null)
+                {
+                    MessageBox.Show("no Data found");
+                    return;
+                }
+
+                string id = dgvStudents.CurrentRow.Cells["id"].Value?.ToString();
+                frmSubjects f = new frmSubjects(id);
+                f.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message.ToString());
+                throw;
+            }
+
         }
     }
 }
