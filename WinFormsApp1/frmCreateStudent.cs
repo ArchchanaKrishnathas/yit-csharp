@@ -97,7 +97,7 @@ namespace WinFormsApp1
         }
 
 
-        private void btnCreate_Click(object sender, EventArgs e)
+        private async void btnCreate_Click(object sender, EventArgs e)
         {
             using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
@@ -177,7 +177,7 @@ namespace WinFormsApp1
 
                     StudentDal studentDal = new StudentDal();
 
-                    int affected = studentDal.Store(
+                    int affected = await studentDal.Store(
                         txtFname.Text.Trim(),
                         txtLname.Text.Trim(),
                         txtAddress.Text.Trim(),

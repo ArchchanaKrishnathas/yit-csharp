@@ -19,30 +19,26 @@ namespace WinFormsApp1
             InitializeComponent();
         }
 
-        private void btnConnect_Click(object sender, EventArgs e)
+        private async void btnConnect_Click(object sender, EventArgs e)
         {
-            //string connString = "Server=localhost;Database=school;Uid=root;Pwd=;port=3307";
-            MySqlConnection conn = new MySqlConnection(connectionString);
+            await using var conn = new MySqlConnection(connectionString);
 
             try
             {
-                conn.Open();
+                await conn.OpenAsync();
                 MessageBox.Show("Connection Successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
                 MessageBox.Show("An error occurred while connecting the databse: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            finally
-            {
-                conn.Close();
-            }
+         
         }
 
-        private void btnStudents_Click(object sender, EventArgs e)
+        private async void btnStudents_Click(object sender, EventArgs e)
         {
             StudentDal studentDal = new StudentDal();
-            DataTable dt = studentDal.GetAll();
+            DataTable dt = await studentDal.GetAll();
             dgvStudents.DataSource = dt;
         }
 
@@ -133,7 +129,7 @@ namespace WinFormsApp1
 
         private void btnLoadGrade(object sender, EventArgs e)
         {
-            string connString = "Server=localhost;Database=school;Uid=root;Pwd=;port=3307";
+            /*string connString = "Server=localhost;Database=school;Uid=root;Pwd=;port=3307";
             MySqlConnection conn = new MySqlConnection(connString);
 
             try
@@ -156,7 +152,7 @@ namespace WinFormsApp1
             finally
             {
                 conn.Close();
-            }
+            }*/
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -231,7 +227,7 @@ namespace WinFormsApp1
             }
         }
 
-        private void btnDelete_Click(object sender, EventArgs e)
+        private async void btnDelete_Click(object sender, EventArgs e)
         {
             try
             {
@@ -249,7 +245,7 @@ namespace WinFormsApp1
                 {
                     StudentDal studentDal = new StudentDal();
 
-                    int affected = studentDal.Delete(id);
+                    int affected = await studentDal.Delete(id);
 
                     MessageBox.Show("Deleted successfully. Rows Affected: " + affected.ToString(), "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 

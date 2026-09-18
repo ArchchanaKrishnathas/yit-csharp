@@ -21,10 +21,10 @@ namespace WinFormsApp1
             this.studentId = id;
         }
 
-        private void frmSubjects_Load(object sender, EventArgs e)
+        private async void frmSubjects_Load(object sender, EventArgs e)
         {
             StudentDal studentDal = new StudentDal();
-            DataTable dt = studentDal.GetByID(studentId);
+            DataTable dt = await studentDal.GetByID(studentId);
 
             DataRow dr = dt.Rows[0];
 

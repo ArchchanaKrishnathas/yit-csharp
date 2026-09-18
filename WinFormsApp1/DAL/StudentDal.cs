@@ -1,5 +1,237 @@
 ﻿using MySqlConnector;
 using System;
+using System.Configuration;
+using System.Data;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace WinFormsApp1.DAL
+{
+    public class StudentDal
+    {
+        string connectionString = ConfigurationManager.ConnectionStrings["MyDbConnection"]?.ConnectionString ?? string.Empty;
+        public async Task<DataTable> GetAll()
+        {
+            DataTable dt = new DataTable();
+
+            try
+            {
+                await using var connection = new MySqlConnection(connectionString);
+                await connection.OpenAsync();
+                string sql = "SELECT * FROM students";
+
+                await using var cmd = new MySqlCommand(sql, connection);
+
+                await using var reader = await cmd.ExecuteReaderAsync();
+
+                dt.Load(reader);
+                return dt;
+
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred while connecting the databse: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return dt;
+            }
+           
+        }
+
+
+        public async Task<DataTable> GetByID(string id)
+        {
+            DataTable dt = new DataTable();
+
+            try
+            {
+                await using var connection = new MySqlConnection(connectionString);
+                await connection.OpenAsync();
+
+                string sql = "SELECT * FROM students WHERE id = @id";
+                await using var cmd = new MySqlCommand(sql, connection);
+
+                cmd.Parameters.AddWithValue("@id", id);
+                await using var reader = await cmd.ExecuteReaderAsync();
+                dt.Load(reader);
+                return dt;
+
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred while connecting the databse: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return dt;
+            }
+                    }
+
+        // Update
+        public async Task<int> Update(
+            string id,
+            string firstName,
+            string lastName,
+            string address,
+            object gradeId,
+            object houseId,
+            string medium,
+            DateTime dateOfBirth,
+            object familyId,
+            string gender,
+            string admissionNumber,
+            string nicNumber,
+            string birthCertificateNumber,
+            string telephoneNumber)
+        {
+           
+
+            try
+            {
+                await using var connection = new MySqlConnection(connectionString);
+                await connection.OpenAsync();
+
+                string sql = 
+                    "UPDATE students SET " +
+                    "first_name=@first_name, " +
+                    "last_name=@last_name, " +
+                    "per_address=@per_address, " +
+                    "grade_id=@grade_id, " +
+                    "house_id=@house_id, " +
+                    "medium=@medium, " +
+                    "date_of_birth=@date_of_birth, " +
+                    "family_id=@family_id, " +
+                    "gender=@gender, " +
+                    "admission_number=@admission_number, " +
+                    "nic_number=@nic_number, " +
+                    "birth_certificate_number=@birth_certificate_number, " +
+                    "tele_number=@tele_number " +
+                    "WHERE id=@id";
+
+                await using var cmd = new MySqlCommand(sql, connection);
+
+                cmd.Parameters.AddWithValue("@first_name", firstName);
+                cmd.Parameters.AddWithValue("@last_name", lastName);
+                cmd.Parameters.AddWithValue("@per_address", address);
+                cmd.Parameters.AddWithValue("@grade_id", gradeId);
+                cmd.Parameters.AddWithValue("@house_id", houseId);
+                cmd.Parameters.AddWithValue("@medium", medium);
+                cmd.Parameters.AddWithValue("@date_of_birth", dateOfBirth);
+                cmd.Parameters.AddWithValue("@family_id", familyId);
+                cmd.Parameters.AddWithValue("@gender", gender);
+                cmd.Parameters.AddWithValue("@admission_number", admissionNumber);
+                cmd.Parameters.AddWithValue("@nic_number", nicNumber);
+                cmd.Parameters.AddWithValue("@birth_certificate_number", birthCertificateNumber);
+                cmd.Parameters.AddWithValue("@tele_number", telephoneNumber);
+                cmd.Parameters.AddWithValue("@id", id);
+
+                return await cmd.ExecuteNonQueryAsync();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "An error occurred while updating student: " + ex.Message,
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+
+                return 0;
+            }
+          
+        }
+
+
+        public async Task<int> Delete(string id)
+        {
+     
+            try
+            {
+                await using var connection = new MySqlConnection(connectionString);
+                await connection.OpenAsync();
+
+                string sql = "DELETE FROM students WHERE id = @id";
+
+                await using var cmd = new MySqlCommand(sql, connection);
+                cmd.Parameters.AddWithValue("@id", id);
+
+                return await cmd.ExecuteNonQueryAsync();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred while deleting student: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                return 0;
+            }
+           
+        }
+
+
+
+        public async Task<int> Store(
+            string firstName,
+            string lastName,
+            string address,
+            int gradeId,
+            int houseId,
+            string medium,
+            DateTime dateOfBirth,
+            int familyId,
+            string gender,
+            string admissionNumber,
+            string nicNumber,
+            string birthCertificateNumber,
+            string telephoneNumber)
+        {
+    
+            try
+            {
+                await using var connection = new MySqlConnection(connectionString);
+                await connection.OpenAsync();
+
+                string sql =
+                    "INSERT INTO students " +
+                    "(first_name, last_name, per_address, grade_id, house_id, medium, " +
+                    "date_of_birth, family_id, gender, admission_number, nic_number, " +
+                    "birth_certificate_number, tele_number) " +
+                    "VALUES " +
+                    "(@first_name, @last_name, @per_address, @grade_id, @house_id, @medium, " +
+                    "@date_of_birth, @family_id, @gender, @admission_number, @nic_number, " +
+                    "@birth_certificate_number, @tele_number)";
+
+                await using var cmd = new MySqlCommand(sql, connection);
+
+                cmd.Parameters.AddWithValue("@first_name", firstName);
+                cmd.Parameters.AddWithValue("@last_name", lastName);
+                cmd.Parameters.AddWithValue("@per_address", address);
+                cmd.Parameters.AddWithValue("@grade_id", gradeId);
+                cmd.Parameters.AddWithValue("@house_id", houseId);
+                cmd.Parameters.AddWithValue("@medium", medium);
+                cmd.Parameters.AddWithValue("@date_of_birth", dateOfBirth);
+                cmd.Parameters.AddWithValue("@family_id", familyId);
+                cmd.Parameters.AddWithValue("@gender", gender);
+                cmd.Parameters.AddWithValue("@admission_number", admissionNumber);
+                cmd.Parameters.AddWithValue("@nic_number", nicNumber);
+                cmd.Parameters.AddWithValue("@birth_certificate_number", birthCertificateNumber);
+                cmd.Parameters.AddWithValue("@tele_number", telephoneNumber);
+
+                return await cmd.ExecuteNonQueryAsync();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "An error occurred while storing student: " + ex.Message,
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+
+                return 0;
+            }
+            
+        }
+
+    }
+}
+
+
+/*using MySqlConnector;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -46,9 +278,9 @@ namespace WinFormsApp1.DAL
             try
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand("SELECT * FROM students WHERE id=@id", conn);
+                MySqlCommand cmd = new MySqlCommand($"SELECT * FROM students WHERE id=@id", conn);
 
-                cmd.Parameters.AddWithValue("@id", id); 
+                cmd.Parameters.AddWithValue("@id", id);
                 MySqlDataAdapter da = new MySqlDataAdapter(cmd);
                 da.Fill(dt);
                 return dt;
@@ -236,3 +468,4 @@ namespace WinFormsApp1.DAL
 
     }
 }
+*/

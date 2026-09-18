@@ -18,13 +18,13 @@ namespace WinFormsApp1
             this.studentId = id;
         }
 
-        private void frmEditStudent_Load(object sender, EventArgs e)
+        private async void frmEditStudent_Load(object sender, EventArgs e)
         {
 
 
             StudentDal studentDal = new StudentDal();
 
-            DataTable dt = studentDal.GetByID(studentId);
+            DataTable dt = await studentDal.GetByID(studentId);
 
             if (dt.Rows.Count == 0)
             {
@@ -138,8 +138,7 @@ namespace WinFormsApp1
             {
                 FamilyDal familyDal = new FamilyDal();
 
-                DataTable familyTable =
-                    familyDal.GetByID(familyId.Value.ToString());
+                DataTable familyTable = familyDal.GetByID(familyId.Value.ToString());
 
                 if (familyTable.Rows.Count > 0)
                 {
@@ -171,14 +170,14 @@ namespace WinFormsApp1
 
         }
 
-        private void btnUpdate_Click(object sender, EventArgs e)
+        private async void btnUpdate_Click(object sender, EventArgs e)
         {
             try
             {
                 // STUDENT UPDATE
                 StudentDal studentDal = new StudentDal();
 
-                int affectedRow = studentDal.Update(
+                int affectedRow = await studentDal.Update(
                     studentId,
                     txtFname.Text,
                     txtLname.Text,
