@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySqlConnector;
+using System;
 using System.Configuration;
 using System.Data;
 using System.Windows.Forms;

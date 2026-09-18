@@ -1,5 +1,6 @@
-﻿using MySql.Data.MySqlClient;
+﻿using MySqlConnector;
 using System;
+using System.Configuration;
 using System.Data;
 using System.Windows.Forms;
 
@@ -7,13 +8,13 @@ namespace WinFormsApp1.DAL
 {
     public class StudentSubjectDal
     {
-        string connString = "Server=localhost;Database=school;Uid=root;Pwd=;port=3307";
+        string connectionString = ConfigurationManager.ConnectionStrings["MyDbConnection"]?.ConnectionString ?? string.Empty;
 
         public DataTable GetByStudentId(string studentId)
         {
             DataTable dt = new DataTable();
 
-            using (MySqlConnection conn = new MySqlConnection(connString))
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 try
                 {
@@ -49,7 +50,7 @@ namespace WinFormsApp1.DAL
 
         public int Store(string studentId, string subjectId)
         {
-            using (MySqlConnection conn = new MySqlConnection(connString))
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 try
                 {
@@ -85,7 +86,7 @@ namespace WinFormsApp1.DAL
 
         public int Delete(string studentId)
         {
-            using (MySqlConnection conn = new MySqlConnection(connString))
+            using (MySqlConnection conn = new MySqlConnection(connectionString))
             {
                 try
                 {

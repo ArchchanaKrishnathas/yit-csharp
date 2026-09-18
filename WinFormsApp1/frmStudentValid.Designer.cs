@@ -67,6 +67,7 @@
             lblHeading.TabIndex = 31;
             lblHeading.Text = "Student Registration";
             lblHeading.TextAlign = ContentAlignment.MiddleCenter;
+            lblHeading.Click += lblHeading_Click;
             // 
             // btmFillData
             // 

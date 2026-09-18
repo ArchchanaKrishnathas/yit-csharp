@@ -1,5 +1,6 @@
-﻿using MySql.Data.MySqlClient;
+﻿using MySqlConnector;
 using System;
+using System.Configuration;
 using System.Collections.Generic;
 using System.Data;
 using System.Text;
@@ -8,10 +9,10 @@ namespace WinFormsApp1.DAL
 {
     public class FamilyDal
     {
-        string connString = "Server=localhost;Database=school;Uid=root;Pwd=;port=3307";
+        string connectionString = ConfigurationManager.ConnectionStrings["MyDbConnection"]?.ConnectionString ?? string.Empty;
         public DataTable GetAll()
         {
-            MySqlConnection conn = new MySqlConnection(connString);
+            MySqlConnection conn = new MySqlConnection(connectionString);
             DataTable dt = new DataTable();
 
             try
@@ -40,7 +41,7 @@ namespace WinFormsApp1.DAL
 
         public DataTable GetByID(string id)
         {
-            MySqlConnection conn = new MySqlConnection(connString);
+            MySqlConnection conn = new MySqlConnection(connectionString);
             DataTable dt = new DataTable();
 
             try
@@ -72,7 +73,7 @@ namespace WinFormsApp1.DAL
 
         public int Update(string id, string mobileNumber)
         {
-            MySqlConnection conn = new MySqlConnection(connString);
+            MySqlConnection conn = new MySqlConnection(connectionString);
 
             try
             {
@@ -108,7 +109,7 @@ namespace WinFormsApp1.DAL
 
         public int Store(string mobileNumber)
         {
-            MySqlConnection conn = new MySqlConnection(connString);
+            MySqlConnection conn = new MySqlConnection(connectionString);
 
             try
             {

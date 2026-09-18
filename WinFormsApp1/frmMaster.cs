@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using WinFormsApp1.Grade;
+using MySqlConnector;
 
 namespace WinFormsApp1
 {

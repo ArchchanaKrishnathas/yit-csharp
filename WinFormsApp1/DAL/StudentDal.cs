@@ -1,6 +1,7 @@
-﻿using MySql.Data.MySqlClient;
+﻿using MySqlConnector;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Text;
 
@@ -8,11 +9,11 @@ namespace WinFormsApp1.DAL
 {
     public class StudentDal
     {
-        string connString = "Server=localhost;Database=school;Uid=root;Pwd=;port=3307";
+        string connectionString = ConfigurationManager.ConnectionStrings["MyDbConnection"]?.ConnectionString ?? string.Empty;
         public DataTable GetAll()
         {
-            MySqlConnection conn = new MySqlConnection(connString);
-            DataTable dt = new DataTable(); 
+            MySqlConnection conn = new MySqlConnection(connectionString);
+            DataTable dt = new DataTable();
 
             try
             {
@@ -39,14 +40,15 @@ namespace WinFormsApp1.DAL
 
         public DataTable GetByID(string id)
         {
-            MySqlConnection conn = new MySqlConnection(connString);
+            MySqlConnection conn = new MySqlConnection(connectionString);
             DataTable dt = new DataTable();
 
             try
             {
                 conn.Open();
-                MySqlCommand cmd = new MySqlCommand($"SELECT * FROM students WHERE id={id}", conn);
+                MySqlCommand cmd = new MySqlCommand("SELECT * FROM students WHERE id=@id", conn);
 
+                cmd.Parameters.AddWithValue("@id", id); 
                 MySqlDataAdapter da = new MySqlDataAdapter(cmd);
                 da.Fill(dt);
                 return dt;
@@ -82,7 +84,7 @@ namespace WinFormsApp1.DAL
         string birthCertificateNumber,
         string telephoneNumber)
         {
-            MySqlConnection conn = new MySqlConnection(connString);
+            MySqlConnection conn = new MySqlConnection(connectionString);
 
             try
             {
@@ -142,7 +144,7 @@ namespace WinFormsApp1.DAL
 
         public int Delete(string id)
         {
-            MySqlConnection conn = new MySqlConnection(connString);
+            MySqlConnection conn = new MySqlConnection(connectionString);
 
             try
             {
@@ -183,7 +185,7 @@ namespace WinFormsApp1.DAL
             string birthCertificateNumber,
             string telephoneNumber)
                 {
-                    MySqlConnection conn = new MySqlConnection(connString);
+                    MySqlConnection conn = new MySqlConnection(connectionString);
 
                     try
                     {

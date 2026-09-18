@@ -1,5 +1,6 @@
-﻿using MySql.Data.MySqlClient;
+﻿using MySqlConnector;
 using System;
+using System.Configuration;
 using System.Collections.Generic;
 using System.Data;
 using System.Text;
@@ -8,11 +9,11 @@ namespace WinFormsApp1.DAL
 {
     public class HouseDal
     {
-        string connString = "Server=localhost;Database=school;Uid=root;Pwd=;port=3307";
+        string connectionString = ConfigurationManager.ConnectionStrings["MyDbConnection"]?.ConnectionString ?? string.Empty;
 
         public DataTable GetAll()
         {
-            MySqlConnection conn = new MySqlConnection(connString);
+            MySqlConnection conn = new MySqlConnection(connectionString);
             DataTable dt = new DataTable();
 
             try
