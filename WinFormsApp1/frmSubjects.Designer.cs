@@ -119,7 +119,7 @@
             lblHeading.ForeColor = Color.White;
             lblHeading.Location = new Point(0, 0);
             lblHeading.Name = "lblHeading";
-            lblHeading.Size = new Size(416, 50);
+            lblHeading.Size = new Size(408, 50);
             lblHeading.TabIndex = 87;
             lblHeading.Text = "Add Subjects";
             lblHeading.TextAlign = ContentAlignment.MiddleCenter;
@@ -136,20 +136,22 @@
             // 
             // btnSave
             // 
+            btnSave.BackColor = Color.SeaGreen;
             btnSave.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnSave.Location = new Point(268, 375);
+            btnSave.ForeColor = Color.White;
+            btnSave.Location = new Point(273, 367);
             btnSave.Name = "btnSave";
-            btnSave.Size = new Size(108, 35);
+            btnSave.Size = new Size(108, 46);
             btnSave.TabIndex = 89;
             btnSave.Text = "Save";
-            btnSave.UseVisualStyleBackColor = true;
+            btnSave.UseVisualStyleBackColor = false;
             btnSave.Click += btnSave_Click;
             // 
             // frmSubjects
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(416, 425);
+            ClientSize = new Size(408, 425);
             Controls.Add(btnSave);
             Controls.Add(clbSubjects);
             Controls.Add(lblHeading);
@@ -162,6 +164,7 @@
             Controls.Add(label2);
             Controls.Add(label1);
             Name = "frmSubjects";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "frmSubjects";
             Load += frmSubjects_Load;
             ResumeLayout(false);

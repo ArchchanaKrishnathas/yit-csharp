@@ -1,5 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
+using System.Data;
 using System.Windows.Forms;
 
 namespace WinFormsApp1.DAL
@@ -7,6 +8,44 @@ namespace WinFormsApp1.DAL
     public class StudentSubjectDal
     {
         string connString = "Server=localhost;Database=school;Uid=root;Pwd=;port=3307";
+
+        public DataTable GetByStudentId(string studentId)
+        {
+            DataTable dt = new DataTable();
+
+            using (MySqlConnection conn = new MySqlConnection(connString))
+            {
+                try
+                {
+                    conn.Open();
+
+                    string query = @"
+                        SELECT subject_id
+                        FROM student_subjects
+                        WHERE student_id = @studentId";
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@studentId", studentId);
+
+                        using (MySqlDataAdapter adapter = new MySqlDataAdapter(cmd))
+                        {
+                            adapter.Fill(dt);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(
+                        "Error loading student subjects:\n" + ex.Message,
+                        "Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                }
+            }
+
+            return dt;
+        }
 
         public int Store(string studentId, string subjectId)
         {
@@ -35,6 +74,38 @@ namespace WinFormsApp1.DAL
                 {
                     MessageBox.Show(
                         "Database Error:\n\n" + ex.Message,
+                        "Error",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+
+                    return 0;
+                }
+            }
+        }
+
+        public int Delete(string studentId)
+        {
+            using (MySqlConnection conn = new MySqlConnection(connString))
+            {
+                try
+                {
+                    conn.Open();
+
+                    string query = @"
+                DELETE FROM student_subjects
+                WHERE student_id = @studentId";
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@studentId", studentId);
+
+                        return cmd.ExecuteNonQuery();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(
+                        "Error deleting subjects:\n" + ex.Message,
                         "Error",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);

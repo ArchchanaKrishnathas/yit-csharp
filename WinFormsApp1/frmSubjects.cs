@@ -39,6 +39,27 @@ namespace WinFormsApp1
             clbSubjects.DisplayMember = "subject_name";
             clbSubjects.ValueMember = "id";
 
+
+            // Load student's existing subjects
+            StudentSubjectDal studentSubjectDal = new StudentSubjectDal();
+            DataTable dtStudentSubjects = studentSubjectDal.GetByStudentId(studentId);
+
+            // Check existing subjects
+            foreach (DataRow row in dtStudentSubjects.Rows)
+            {
+                string subjectId = row["subject_id"].ToString();
+
+                for (int i = 0; i < clbSubjects.Items.Count; i++)
+                {
+                    DataRowView item = (DataRowView)clbSubjects.Items[i];
+
+                    if (item["id"].ToString() == subjectId)
+                    {
+                        clbSubjects.SetItemChecked(i, true);
+                        break;
+                    }
+                }
+            }
         }
 
         private void clbSubjects_SelectedIndexChanged(object sender, EventArgs e)
@@ -62,6 +83,10 @@ namespace WinFormsApp1
 
             StudentSubjectDal studentSubjectDal = new StudentSubjectDal();
 
+            // Remove existing subjects for this student
+            studentSubjectDal.Delete(studentId);
+
+            // Save currently checked subjects
             int savedCount = 0;
 
             foreach (DataRowView item in clbSubjects.CheckedItems)
@@ -76,15 +101,11 @@ namespace WinFormsApp1
                 }
             }
 
-            if (savedCount > 0)
-            {
-                MessageBox.Show(
-                    savedCount + " subject(s) saved successfully.",
-                    "Success",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Information
-                );
-            }
+            MessageBox.Show(
+                savedCount + " subject(s) saved successfully.",
+                "Success",
+                MessageBoxButtons.OK,
+                MessageBoxIcon.Information);
         }
     }
 }
