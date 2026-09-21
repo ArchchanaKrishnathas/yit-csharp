@@ -1,9 +1,8 @@
 ﻿using MySqlConnector;
 using System;
 using System.Configuration;
-using System.Collections.Generic;
 using System.Data;
-using System.Text;
+using System.Threading.Tasks;
 
 
 namespace WinFormsApp1.DAL
@@ -11,20 +10,23 @@ namespace WinFormsApp1.DAL
     public class SubjectDal
     {
         string connectionString = ConfigurationManager.ConnectionStrings["MyDbConnection"]?.ConnectionString ?? string.Empty;
-        public DataTable GetAll()
+        public async Task<DataTable> GetAll()
         {
-            MySqlConnection conn = new MySqlConnection(connectionString);
             DataTable dt = new DataTable();
 
             try
             {
-                conn.Open();
+                await using var conn = new MySqlConnection(connectionString);
 
-                MySqlCommand cmd = new MySqlCommand("SELECT * FROM subjects", conn);
+                await conn.OpenAsync();
 
-                MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+                string query = "SELECT * FROM subjects";
 
-                da.Fill(dt);
+                await using var cmd = new MySqlCommand(query, conn);
+
+                await using var reader = await cmd.ExecuteReaderAsync();
+
+                dt.Load(reader);
 
                 return dt;
             }
@@ -34,10 +36,7 @@ namespace WinFormsApp1.DAL
 
                 return dt;
             }
-            finally
-            {
-                conn.Close();
-            }
+          
         }
 
     }

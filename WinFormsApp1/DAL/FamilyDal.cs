@@ -1,29 +1,31 @@
 ﻿using MySqlConnector;
 using System;
 using System.Configuration;
-using System.Collections.Generic;
 using System.Data;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace WinFormsApp1.DAL
 {
     public class FamilyDal
     {
         string connectionString = ConfigurationManager.ConnectionStrings["MyDbConnection"]?.ConnectionString ?? string.Empty;
-        public DataTable GetAll()
+        public async Task<DataTable> GetAll()
         {
-            MySqlConnection conn = new MySqlConnection(connectionString);
             DataTable dt = new DataTable();
 
             try
             {
-                conn.Open();
+                await using var conn = new MySqlConnection(connectionString);
 
-                MySqlCommand cmd = new MySqlCommand("SELECT * FROM families", conn);
+                await conn.OpenAsync();
 
-                MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+                string query = "SELECT * FROM families";
 
-                da.Fill(dt);
+                await using var cmd = new MySqlCommand(query, conn);
+
+                await using var reader = await cmd.ExecuteReaderAsync();
+
+                dt.Load(reader);
 
                 return dt;
             }
@@ -33,28 +35,28 @@ namespace WinFormsApp1.DAL
 
                 return dt;
             }
-            finally
-            {
-                conn.Close();
-            }
+           
         }
 
-        public DataTable GetByID(string id)
+        public async Task<DataTable> GetByID(string id)
         {
-            MySqlConnection conn = new MySqlConnection(connectionString);
             DataTable dt = new DataTable();
 
             try
             {
-                conn.Open();
+                await using var conn = new MySqlConnection(connectionString);
 
-                MySqlCommand cmd = new MySqlCommand("SELECT * FROM families WHERE id = @id", conn);
+                await conn.OpenAsync();
+
+                string query = @"SELECT * FROM families WHERE id = @id";
+                 
+                await using var cmd = new MySqlCommand(query, conn);
 
                 cmd.Parameters.AddWithValue("@id", id);
 
-                MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+                await using var reader = await cmd.ExecuteReaderAsync();
 
-                da.Fill(dt);
+                dt.Load(reader);
 
                 return dt;
             }
@@ -64,30 +66,29 @@ namespace WinFormsApp1.DAL
 
                 return dt;
             }
-            finally
-            {
-                conn.Close();
-            }
+          
         }
 
 
-        public int Update(string id, string mobileNumber)
+        public async Task<int> Update(string id, string mobileNumber)
         {
-            MySqlConnection conn = new MySqlConnection(connectionString);
-
             try
             {
-                conn.Open();
+                await using var conn = new MySqlConnection(connectionString);
 
-                MySqlCommand cmd = new MySqlCommand(
-                    "UPDATE families SET mobile_number=@mobile_number " +
-                    "WHERE id=@id",
-                    conn);
+                await conn.OpenAsync();
+
+                string query = @"
+                    UPDATE families
+                    SET mobile_number = @mobile_number
+                    WHERE id = @id";
+
+                await using var cmd = new MySqlCommand(query, conn);
 
                 cmd.Parameters.AddWithValue("@mobile_number", mobileNumber);
                 cmd.Parameters.AddWithValue("@id", id);
 
-                return cmd.ExecuteNonQuery();
+                return await cmd.ExecuteNonQueryAsync();
             }
             catch (Exception ex)
             {
@@ -99,30 +100,29 @@ namespace WinFormsApp1.DAL
 
                 return 0;
             }
-            finally
-            {
-                conn.Close();
-            }
         }
 
 
 
-        public int Store(string mobileNumber)
+        public async Task<int> Store(string mobileNumber)
         {
-            MySqlConnection conn = new MySqlConnection(connectionString);
-
             try
             {
-                conn.Open();
+                await using var conn = new MySqlConnection(connectionString);
+
+                await conn.OpenAsync();
 
                 // Check whether family already exists
-                MySqlCommand checkCmd = new MySqlCommand(
-                    "SELECT id FROM families WHERE mobile_number = @mobile_number",
-                    conn);
+                string checkQuery = @"
+                    SELECT id
+                    FROM families
+                    WHERE mobile_number = @mobile_number";
+
+                await using var checkCmd = new MySqlCommand(checkQuery, conn);
 
                 checkCmd.Parameters.AddWithValue("@mobile_number", mobileNumber);
 
-                object result = checkCmd.ExecuteScalar();
+                object result = await checkCmd.ExecuteScalarAsync();
 
                 if (result != null)
                 {
@@ -130,15 +130,21 @@ namespace WinFormsApp1.DAL
                 }
 
                 // Insert new family
-                MySqlCommand cmd = new MySqlCommand(
-                    "INSERT INTO families (mobile_number) " +
-                    "VALUES (@mobile_number); " +
-                    "SELECT LAST_INSERT_ID();",
-                    conn);
+                string query = @"
+                    INSERT INTO families (mobile_number)
+                    VALUES (@mobile_number);
 
-                cmd.Parameters.AddWithValue("@mobile_number", mobileNumber);
+                    SELECT LAST_INSERT_ID();";
 
-                return Convert.ToInt32(cmd.ExecuteScalar());
+                await using var cmd = new MySqlCommand(query, conn);
+
+                cmd.Parameters.AddWithValue(
+                    "@mobile_number",
+                    mobileNumber);
+
+                object newId = await cmd.ExecuteScalarAsync();
+
+                return Convert.ToInt32(newId);
             }
             catch (Exception ex)
             {
@@ -150,10 +156,7 @@ namespace WinFormsApp1.DAL
 
                 return 0;
             }
-            finally
-            {
-                conn.Close();
-            }
+           
         }
     }
 }

@@ -167,7 +167,7 @@ namespace WinFormsApp1
 
                     FamilyDal familyDal = new FamilyDal();
 
-                    int familyId = familyDal.Store(guardianNumber);
+                    int familyId = await familyDal.Store(guardianNumber);
 
                     if (familyId == 0)
                     {

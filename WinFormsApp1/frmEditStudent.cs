@@ -61,7 +61,7 @@ namespace WinFormsApp1
 
             HouseDal houseDal = new HouseDal();
 
-            DataTable houseTable = houseDal.GetAll();
+            DataTable houseTable = await houseDal.GetAll();
 
             cmbHouseName.DataSource = houseTable;
             cmbHouseName.DisplayMember = "house_name";
@@ -138,7 +138,7 @@ namespace WinFormsApp1
             {
                 FamilyDal familyDal = new FamilyDal();
 
-                DataTable familyTable = familyDal.GetByID(familyId.Value.ToString());
+                DataTable familyTable = await familyDal.GetByID(familyId.Value.ToString());
 
                 if (familyTable.Rows.Count > 0)
                 {

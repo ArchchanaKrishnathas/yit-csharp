@@ -34,7 +34,7 @@ namespace WinFormsApp1
 
             // Load subjects into the list box
             SubjectDal subjectDal = new SubjectDal();
-            DataTable dtSubjects = subjectDal.GetAll();
+            DataTable dtSubjects = await subjectDal.GetAll();
 
             clbSubjects.DataSource = dtSubjects;
             clbSubjects.DisplayMember = "subject_name";
@@ -43,7 +43,7 @@ namespace WinFormsApp1
 
             // Load student's existing subjects
             StudentSubjectDal studentSubjectDal = new StudentSubjectDal();
-            DataTable dtStudentSubjects = studentSubjectDal.GetByStudentId(studentId);
+            DataTable dtStudentSubjects = await studentSubjectDal.GetByStudentId(studentId);
 
             // Check existing subjects
             foreach (DataRow row in dtStudentSubjects.Rows)
@@ -68,7 +68,7 @@ namespace WinFormsApp1
 
         }
 
-        private void btnSave_Click(object sender, EventArgs e)
+        private async void btnSave_Click(object sender, EventArgs e)
         {
             if (clbSubjects.CheckedItems.Count == 0)
             {
@@ -94,7 +94,7 @@ namespace WinFormsApp1
             {
                 string subjectId = item["id"].ToString();
 
-                int result = studentSubjectDal.Store(studentId, subjectId);
+                int result = await studentSubjectDal.Store(studentId, subjectId);
 
                 if (result > 0)
                 {
