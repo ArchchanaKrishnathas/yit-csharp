@@ -41,7 +41,7 @@ namespace WinFormsApp1
             // GRADE
             GradeDal gradeDal = new GradeDal();
 
-            DataTable gradeTable = gradeDal.GetAll();
+            DataTable gradeTable = await gradeDal.GetAll();
 
             cmbGradeName.DataSource = gradeTable;
             cmbGradeName.DisplayMember = "grade_name";

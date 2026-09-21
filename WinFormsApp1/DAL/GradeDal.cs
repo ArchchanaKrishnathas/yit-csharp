@@ -1,9 +1,8 @@
 ﻿using MySqlConnector;
 using System;
 using System.Configuration;
-using System.Collections.Generic;
 using System.Data;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace WinFormsApp1.DAL
 {
@@ -11,20 +10,22 @@ namespace WinFormsApp1.DAL
     {
         string connectionString = ConfigurationManager.ConnectionStrings["MyDbConnection"]?.ConnectionString ?? string.Empty;
 
-        public DataTable GetAll()
+        public async Task<DataTable> GetAll()
         {
-            MySqlConnection conn = new MySqlConnection(connectionString);
             DataTable dt = new DataTable();
 
             try
             {
-                conn.Open();
+                await using var conn = new MySqlConnection(connectionString);
+                await conn.OpenAsync();
 
-                MySqlCommand cmd = new MySqlCommand("SELECT * FROM grades", conn);
+                string query = "SELECT * FROM grades";
 
-                MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+                await using var cmd = new MySqlCommand(query, conn);
 
-                da.Fill(dt);
+                await using var reader = await cmd.ExecuteReaderAsync();
+
+                dt.Load(reader);
 
                 return dt;
             }
@@ -34,27 +35,28 @@ namespace WinFormsApp1.DAL
 
                 return dt;
             }
-            finally
-            {
-                conn.Close();
-            }
+           
         }
 
 
-        public DataTable GetByID(string id)
-        {
-            MySqlConnection conn = new MySqlConnection(connectionString);
+        public async Task<DataTable> GetByID(string id)
+        {        
             DataTable dt = new DataTable();
 
             try
             {
-                conn.Open();
+                await using var conn = new MySqlConnection(connectionString);
+                await conn.OpenAsync();
 
-                MySqlCommand cmd = new MySqlCommand($"SELECT * FROM grades WHERE id = {id}", conn);
+                string query = "SELECT * FROM grades WHERE id = @id";
 
-                MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+                await using var cmd = new MySqlCommand(query, conn);
 
-                da.Fill(dt);
+                cmd.Parameters.AddWithValue("@id", id);
+
+                await using var reader = await cmd.ExecuteReaderAsync();
+
+                dt.Load(reader);
 
                 return dt;
             }
@@ -68,13 +70,13 @@ namespace WinFormsApp1.DAL
         }
 
 
-        public int Update(string gradeId, string gradeName, string gradeGroup, string gradeOrder, string colour)
+        public async Task<int> Update(string gradeId, string gradeName, string gradeGroup, string gradeOrder, string colour)
         {
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
-            {
+                await using var conn = new MySqlConnection(connectionString);
+            
                 try
                 {
-                    conn.Open();
+                    await conn.OpenAsync();
 
                     string query = @"UPDATE grades 
                                      SET grade_name = @grade_name,
@@ -83,83 +85,78 @@ namespace WinFormsApp1.DAL
                                          colour = @colour
                                      WHERE id = @id";
 
-                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@grade_name", gradeName);
-                        cmd.Parameters.AddWithValue("@grade_group", gradeGroup);
-                        cmd.Parameters.AddWithValue("@grade_order", gradeOrder);
-                        cmd.Parameters.AddWithValue("@colour", colour);
-                        cmd.Parameters.AddWithValue("@id", gradeId);
+                    await using var cmd = new MySqlCommand(query, conn);
+                
+                    cmd.Parameters.AddWithValue("@grade_name", gradeName);
+                    cmd.Parameters.AddWithValue("@grade_group", gradeGroup);
+                    cmd.Parameters.AddWithValue("@grade_order", gradeOrder);
+                    cmd.Parameters.AddWithValue("@colour", colour);
+                    cmd.Parameters.AddWithValue("@id", gradeId);
 
-                        return cmd.ExecuteNonQuery();
-                    }
+                    return await cmd.ExecuteNonQueryAsync();
+
                 }
                 catch (Exception ex)
                 {
                     throw new Exception("Error updating grade: " + ex.Message);
                 }
-            }
+            
 
         }
-        public int Delete(string id)
-        {
-            MySqlConnection conn = new MySqlConnection(connectionString);
-
+        public async Task<int> Delete(string id)
+        { 
             try
             {
-                conn.Open();
+                await using var conn = new MySqlConnection(connectionString);
 
-                MySqlCommand cmd = new MySqlCommand($"DELETE FROM grades WHERE id = {id}", conn);
-                return cmd.ExecuteNonQuery();
-                
+                await conn.OpenAsync();
 
+                string query = "DELETE FROM grades WHERE id = @id";
+
+                await using var cmd = new MySqlCommand(query, conn);
+
+                cmd.Parameters.AddWithValue("@id", id);
+
+                return await cmd.ExecuteNonQueryAsync();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("An error occurred while connecting the databse: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return 0;
             }
-            finally
-            {
-                conn.Close();
-            }
-
-           
+                    
         }
 
 
-        public int Store(string gradeName, string gradeGroup, string gradeOrder, string colour)
+        public async Task<int> Store(string gradeName, string gradeGroup, string gradeOrder, string colour)
         {
-            using (MySqlConnection conn = new MySqlConnection(connectionString))
+    
+            try
             {
-                try
-                {
-                    conn.Open();
+                await using var conn = new MySqlConnection(connectionString);
+                await conn.OpenAsync();
 
-                    MySqlCommand cmd = new MySqlCommand(
-                            "INSERT INTO grades " +
-                            "(grade_name, grade_group, grade_order, colour) " +
-                            "VALUES " +
-                            "(@gradeName, @gradeGroup, @gradeOrder, @colour)",
-                            conn);
+                string query = @"INSERT INTO grades
+                         (grade_name, grade_group, grade_order, colour)
+                         VALUES
+                         (@gradeName, @gradeGroup, @gradeOrder, @colour)";
 
-                    cmd.Parameters.AddWithValue("@gradeName", gradeName);
-                    cmd.Parameters.AddWithValue("@gradeGroup", gradeGroup);
-                    cmd.Parameters.AddWithValue("@gradeOrder", gradeOrder);
-                    cmd.Parameters.AddWithValue("@colour", colour);
+                await using var cmd = new MySqlCommand(query, conn);
 
-                    return cmd.ExecuteNonQuery();
-                   
-                }
+                cmd.Parameters.AddWithValue("@gradeName", gradeName);
+                cmd.Parameters.AddWithValue("@gradeGroup", gradeGroup);
+                cmd.Parameters.AddWithValue("@gradeOrder", gradeOrder);
+                cmd.Parameters.AddWithValue("@colour", colour);
+
+                return await cmd.ExecuteNonQueryAsync();
+
+            }
                 catch (Exception ex)
                 {
                     MessageBox.Show("An error occurred while connecting the database: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return 0; 
                 }
-                finally
-                {
-                    conn.Close();
-                }
+               
 
             }
 
@@ -167,4 +164,4 @@ namespace WinFormsApp1.DAL
         }
 
     }
-}
+

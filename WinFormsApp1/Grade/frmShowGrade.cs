@@ -1,11 +1,6 @@
-﻿using MySqlConnector;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Configuration;
+﻿using System;
 using System.Data;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using WinFormsApp1.DAL;
 
@@ -13,7 +8,6 @@ namespace WinFormsApp1.Grade
 {
     public partial class frmShowGrade : Form
     {
-        string connectionString = ConfigurationManager.ConnectionStrings["MyDbConnection"]?.ConnectionString ?? string.Empty;
         private string gradeId;
         public frmShowGrade(string id)
         {
@@ -21,10 +15,10 @@ namespace WinFormsApp1.Grade
             this.gradeId = id;
         }
 
-        private void frmShowGrade_Load(object sender, EventArgs e)
+        private async void frmShowGrade_Load(object sender, EventArgs e)
         {
             GradeDal gradeDal = new GradeDal();
-            DataTable dt = gradeDal.GetByID(gradeId);      
+            DataTable dt = await gradeDal.GetByID(gradeId);      
 
             if (dt.Rows.Count == 0)
             {

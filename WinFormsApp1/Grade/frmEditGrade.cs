@@ -1,19 +1,12 @@
-﻿using MySqlConnector;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Configuration;
+﻿using System;
 using System.Data;
 using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
-using WinFormsApp1.DAL; 
-
+using WinFormsApp1.DAL;
 namespace WinFormsApp1.Grade
 {
     public partial class frmEditGrade : Form
     {
-        string connectionString = ConfigurationManager.ConnectionStrings["MyDbConnection"]?.ConnectionString ?? string.Empty;
         private string gradeId;
         public frmEditGrade(string id)
         {
@@ -21,11 +14,11 @@ namespace WinFormsApp1.Grade
             this.gradeId = id;
         }
 
-        private void frmEditGrade_Load(object sender, EventArgs e)
+        private async void frmEditGrade_Load(object sender, EventArgs e)
         {
             
             GradeDal gradeDal = new GradeDal();
-            DataTable dt = gradeDal.GetByID(gradeId);
+            DataTable dt = await gradeDal.GetByID(gradeId);
 
             if (dt.Rows.Count == 0)
             {
@@ -50,7 +43,7 @@ namespace WinFormsApp1.Grade
         }
 
 
-        private void btnUpdate_Click(object sender, EventArgs e)
+        private async void btnUpdate_Click(object sender, EventArgs e)
         {
             string colour = ColorTranslator.ToHtml(pnlColor.BackColor);
 
@@ -58,7 +51,7 @@ namespace WinFormsApp1.Grade
 
             try
             {
-                int affectedRows = gradeDal.Update(gradeId, txtGrName.Text, txtGrGroup.Text, txtGrOrder.Text, colour);
+                int affectedRows = await gradeDal.Update(gradeId, txtGrName.Text, txtGrGroup.Text, txtGrOrder.Text, colour);
 
                 MessageBox.Show("Updated successfully. Rows Affected: " + affectedRows, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information
 

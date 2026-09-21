@@ -19,10 +19,10 @@ namespace WinFormsApp1.Grade
             InitializeComponent();
         }
 
-        private void btnAllGrades_Click(object sender, EventArgs e)
+        private async void btnAllGrades_Click(object sender, EventArgs e)
         {
             GradeDal gradeDal = new GradeDal();
-            DataTable gradesTable = gradeDal. GetAll();
+            DataTable gradesTable = await gradeDal.GetAll();
             dgvGrades.DataSource = gradesTable;
         }
 
@@ -71,7 +71,7 @@ namespace WinFormsApp1.Grade
             }
         }
 
-        private void btnDelete_Click(object sender, EventArgs e)
+        private async void btnDelete_Click(object sender, EventArgs e)
         { 
 
             try
@@ -90,7 +90,7 @@ namespace WinFormsApp1.Grade
                 {
                     GradeDal gradeDal = new GradeDal();
 
-                    int affected = gradeDal.Delete(id);
+                    int affected = await gradeDal.Delete(id);
 
                     MessageBox.Show("Deleted successfully. Rows Affected: " + affected.ToString(), "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -123,6 +123,7 @@ namespace WinFormsApp1.Grade
 
         private void frmGrade_Load(object sender, EventArgs e)
         {
+
 
         }
     }

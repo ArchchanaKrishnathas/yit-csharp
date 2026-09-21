@@ -26,7 +26,7 @@ namespace WinFormsApp1.Grade
             pnlColor.BackColor = Color.White;
         }
 
-        private void btnInsert_Click(object sender, EventArgs e)
+        private async void btnInsert_Click(object sender, EventArgs e)
         {
 
             try
@@ -40,7 +40,7 @@ namespace WinFormsApp1.Grade
 
                 GradeDal gradeDAL = new GradeDal();
 
-                int affectedRows = gradeDAL.Store(txtGrName.Text, txtGrGroup.Text, txtGrOrder.Text, colour);
+                int affectedRows = await gradeDAL.Store(txtGrName.Text, txtGrGroup.Text, txtGrOrder.Text, colour);
 
                 if (affectedRows > 0)
                 {
