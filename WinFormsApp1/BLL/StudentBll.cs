@@ -84,6 +84,9 @@ namespace WinFormsApp1.BLL
                 houseId == null || houseId == DBNull.Value)
                 throw new ArgumentException("Please select a grade and house.");
 
+            int selectedGradeId = Convert.ToInt32(gradeId);
+            int selectedHouseId = Convert.ToInt32(houseId);
+
             ValidateStudent(firstName, lastName, 1, 1,
                 medium, gender, admissionNumber);
 
@@ -92,8 +95,8 @@ namespace WinFormsApp1.BLL
                 firstName.Trim(),
                 lastName.Trim(),
                 address.Trim(),
-                gradeId,
-                houseId,
+                selectedGradeId,
+                selectedHouseId,
                 medium.Trim(),
                 dateOfBirth.Date,
                 familyId,

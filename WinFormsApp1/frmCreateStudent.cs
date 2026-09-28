@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using WinFormsApp1.DAL;
+using WinFormsApp1.BLL;
 
 namespace WinFormsApp1
 {
@@ -175,9 +176,9 @@ namespace WinFormsApp1
                         return;
                     }
 
-                    StudentDal studentDal = new StudentDal();
+                    StudentBll studentBll = new StudentBll();
 
-                    int affected = await studentDal.Store(
+                    int affected = await studentBll.CreateAsync(
                         txtFname.Text.Trim(),
                         txtLname.Text.Trim(),
                         txtAddress.Text.Trim(),

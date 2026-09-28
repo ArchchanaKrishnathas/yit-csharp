@@ -23,9 +23,8 @@ namespace WinFormsApp1
         {
 
 
-            StudentDal studentDal = new StudentDal();
-
-            DataTable dt = await studentDal.GetByID(studentId);
+            StudentBll studentBll = new StudentBll();
+            DataTable dt = await studentBll.GetByIdAsync(studentId);
 
             if (dt.Rows.Count == 0)
             {
@@ -188,7 +187,7 @@ namespace WinFormsApp1
                     cmbMedium.Text,
                     dtpDob.Value,
                     familyId.HasValue ? familyId.Value : DBNull.Value,
-                    rdbMale.Checked ? "M" : "F",
+                    rdbMale.Checked ? "M" : rdbFemale.Checked ? "F" : "",
                     txtAdmissionNumber.Text,
                     txtNicNumber.Text,
                     txtBirthCertificateNumber.Text,
@@ -202,10 +201,7 @@ namespace WinFormsApp1
                 {
                     FamilyDal familyDal = new FamilyDal();
 
-                    familyDal.Update(
-                        familyId.Value.ToString(),
-                        txtFam.Text
-                    );
+                    await familyDal.Update(familyId.Value.ToString(), txtFam.Text);
                 }
 
                 // SUCCESS MESSAGE
