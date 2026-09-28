@@ -3,6 +3,7 @@ using System;
 using System.Configuration;
 using System.Data;
 using System.Windows.Forms;
+using WinFormsApp1.BLL;
 using WinFormsApp1.DAL;
 
 namespace WinFormsApp1
@@ -175,10 +176,10 @@ namespace WinFormsApp1
             try
             {
                 // STUDENT UPDATE
-                StudentDal studentDal = new StudentDal();
+                StudentBll studentBll = new StudentBll();
 
-                int affectedRow = await studentDal.Update(
-                    studentId,
+                int affectedRow = await studentBll.UpdateAsync(
+                     studentId,
                     txtFname.Text,
                     txtLname.Text,
                     txtAddress.Text,

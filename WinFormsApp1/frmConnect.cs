@@ -8,6 +8,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using WinFormsApp1.DAL;
+using WinFormsApp1.BLL;
 
 namespace WinFormsApp1
 {
@@ -37,8 +38,8 @@ namespace WinFormsApp1
 
         private async void btnStudents_Click(object sender, EventArgs e)
         {
-            StudentDal studentDal = new StudentDal();
-            DataTable dt = await studentDal.GetAll();
+            StudentBll studentBll = new StudentBll();
+            DataTable dt = await studentBll.GetAllAsync();
             dgvStudents.DataSource = dt;
         }
 
@@ -243,9 +244,9 @@ namespace WinFormsApp1
 
                 if (result == DialogResult.Yes)
                 {
-                    StudentDal studentDal = new StudentDal();
+                    StudentBll studentBll = new StudentBll();
 
-                    int affected = await studentDal.Delete(id);
+                    int affected = await studentBll.DeleteAsync(id);
 
                     MessageBox.Show("Deleted successfully. Rows Affected: " + affected.ToString(), "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
