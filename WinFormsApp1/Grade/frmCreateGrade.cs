@@ -7,12 +7,13 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using WinFormsApp1.DAL;
+using WinFormsApp1.BLL;
 
 namespace WinFormsApp1.Grade
 {
     public partial class frmCreateGrade : Form
     {
+        private readonly GradeBll gradeBll = new GradeBll();
         string connectionString = ConfigurationManager.ConnectionStrings["MyDbConnection"]?.ConnectionString ?? string.Empty;
         public frmCreateGrade()
         {
@@ -38,9 +39,7 @@ namespace WinFormsApp1.Grade
                     $"{pnlColor.BackColor.B:X2}";
 
 
-                GradeDal gradeDAL = new GradeDal();
-
-                int affectedRows = await gradeDAL.Store(txtGrName.Text, txtGrGroup.Text, txtGrOrder.Text, colour);
+                int affectedRows = await gradeBll.CreateAsync(txtGrName.Text, txtGrGroup.Text, txtGrOrder.Text, colour);
 
                 if (affectedRows > 0)
                 {

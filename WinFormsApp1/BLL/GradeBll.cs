@@ -4,10 +4,11 @@ using System.Data;
 using System.Text;
 using System.Text.RegularExpressions;
 using WinFormsApp1.DAL;
+using System.Threading.Tasks;
 
 namespace WinFormsApp1.BLL
 {
-    internal class GradeBll
+    public class GradeBll
     {
         private readonly GradeDal gradeDal = new GradeDal();
 

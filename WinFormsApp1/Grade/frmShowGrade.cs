@@ -2,13 +2,14 @@
 using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
-using WinFormsApp1.DAL;
+using WinFormsApp1.BLL;
 
 namespace WinFormsApp1.Grade
 {
     public partial class frmShowGrade : Form
     {
         private string gradeId;
+        private readonly GradeBll gradeBll = new GradeBll();
         public frmShowGrade(string id)
         {
             InitializeComponent();
@@ -17,8 +18,7 @@ namespace WinFormsApp1.Grade
 
         private async void frmShowGrade_Load(object sender, EventArgs e)
         {
-            GradeDal gradeDal = new GradeDal();
-            DataTable dt = await gradeDal.GetByID(gradeId);      
+            DataTable dt = await gradeBll.GetByIdAsync(gradeId);
 
             if (dt.Rows.Count == 0)
             {

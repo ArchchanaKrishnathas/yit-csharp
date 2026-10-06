@@ -6,7 +6,7 @@ using WinFormsApp1.DAL;
 
 namespace WinFormsApp1.BLL
 {
-    internal class StudentBll
+    public class StudentBll
     {
         private readonly StudentDal studentDal = new StudentDal();
 

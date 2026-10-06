@@ -1,29 +1,34 @@
-﻿using MySqlConnector;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Configuration;
 using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using WinFormsApp1.DAL;     
+using WinFormsApp1.BLL;
 
 namespace WinFormsApp1.Grade
 {
     public partial class frmGrade : Form
     {
-        string connectionString = ConfigurationManager.ConnectionStrings["MyDbConnection"]?.ConnectionString ?? string.Empty;
+
+        private readonly GradeBll gradeBll = new GradeBll();
         public frmGrade()
         {
             InitializeComponent();
         }
-
         private async void btnAllGrades_Click(object sender, EventArgs e)
         {
-            GradeDal gradeDal = new GradeDal();
-            DataTable gradesTable = await gradeDal.GetAll();
-            dgvGrades.DataSource = gradesTable;
+            try
+            {
+                DataTable gradesTable = await gradeBll.GetAllAsync();
+                dgvGrades.DataSource = gradesTable;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Unable to load grades: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            }
         }
 
         
@@ -88,12 +93,17 @@ namespace WinFormsApp1.Grade
 
                 if (result == DialogResult.Yes)
                 {
-                    GradeDal gradeDal = new GradeDal();
 
-                    int affected = await gradeDal.Delete(id);
+                    int affected = await gradeBll.DeleteAsync(id);
 
                     MessageBox.Show("Deleted successfully. Rows Affected: " + affected.ToString(), "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+                    // Refresh the table after deleting.
+                    dgvGrades.DataSource = await gradeBll.GetAllAsync();
+                }
+                else
+                {
+                    MessageBox.Show("Grade not found. No rows were deleted.");
                 }
             }
             catch (Exception ex)

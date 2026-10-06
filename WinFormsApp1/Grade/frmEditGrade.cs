@@ -2,12 +2,13 @@
 using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
-using WinFormsApp1.DAL;
+using WinFormsApp1.BLL;
 namespace WinFormsApp1.Grade
 {
     public partial class frmEditGrade : Form
     {
         private string gradeId;
+        private readonly GradeBll gradeBll = new GradeBll();
         public frmEditGrade(string id)
         {
             InitializeComponent();
@@ -17,8 +18,7 @@ namespace WinFormsApp1.Grade
         private async void frmEditGrade_Load(object sender, EventArgs e)
         {
             
-            GradeDal gradeDal = new GradeDal();
-            DataTable dt = await gradeDal.GetByID(gradeId);
+            DataTable dt =  await gradeBll.GetByIdAsync(gradeId);
 
             if (dt.Rows.Count == 0)
             {
@@ -47,11 +47,9 @@ namespace WinFormsApp1.Grade
         {
             string colour = ColorTranslator.ToHtml(pnlColor.BackColor);
 
-            GradeDal gradeDal = new GradeDal();
-
             try
             {
-                int affectedRows = await gradeDal.Update(gradeId, txtGrName.Text, txtGrGroup.Text, txtGrOrder.Text, colour);
+                int affectedRows = await gradeBll.UpdateAsync(gradeId, txtGrName.Text, txtGrGroup.Text, txtGrOrder.Text, colour);
 
                 MessageBox.Show("Updated successfully. Rows Affected: " + affectedRows, "Success", MessageBoxButtons.OK, MessageBoxIcon.Information
 
