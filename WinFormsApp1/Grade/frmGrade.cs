@@ -49,8 +49,7 @@ namespace WinFormsApp1.Grade
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message.ToString());
-                throw;
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
         }
@@ -71,8 +70,7 @@ namespace WinFormsApp1.Grade
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message.ToString());
-                throw;
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -126,8 +124,7 @@ namespace WinFormsApp1.Grade
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message.ToString());
-                throw;
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -137,4 +134,4 @@ namespace WinFormsApp1.Grade
 
         }
     }
-}
+} 
